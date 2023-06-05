@@ -1,0 +1,7 @@
+[core]
+	bare = true
+	repositoryformatversion = 0
+	filemode = true
+[user]
+	name = oxi0x1
+	email = oxi0x1@yandex.ru
