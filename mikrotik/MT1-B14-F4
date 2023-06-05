@@ -1,0 +1,155 @@
+#              model: RB962UiGS-5HacT2HnT
+#      serial-number: BEC40BEB8D73
+#      firmware-type: qca9550L
+#   current-firmware: 6.45.3
+#   installed-version: 6.47
+# Flags: U - undoable, R - redoable, F - floating-undo 
+#   ACTION                                   BY               POLICY             
+# U item added                               admin            write              
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# U ip service changed                       admin            write              
+# U user oXi_backup_usr added                admin            write              
+#                                                             policy             
+# U user oxidized changed                    admin            write              
+#                                                             policy             
+# U changed snmp settings                    admin            write              
+# U changed snmp settings                    admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item removed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U changed snmp settings                    admin            write              
+# U item added                               admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U changed snmp settings                    admin            write              
+# U item changed                             admin            write              
+# U item added                               admin            write              
+# U item changed                             admin            write              
+# U changed snmp settings                    admin            write              
+# U item changed                             admin            write              
+# U changed snmp settings                    admin            write              
+# U changed snmp settings                    admin            write              
+# U changed snmp settings                    admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U changed snmp settings                    admin            write              
+# U changed snmp settings                    admin            write              
+# U item changed                             admin            write              
+# U changed snmp settings                    admin            write              
+# U item added                               admin            write              
+# U item added                               admin            write              
+# U item added                               admin            write              
+# U device removed                           admin            write              
+# U item removed                             admin            write              
+# U item added                               admin            write              
+# U item removed                             admin            write              
+# U dhcp client removed                      admin            write              
+# U dhcp client changed                      admin            write              
+# U dhcp client changed                      admin            write              
+# U dhcp client changed                      admin            write              
+# U item changed                             admin            write              
+# U dhcp client added                        admin            write              
+# U device changed                           admin            write              
+# U device added                             admin            write              
+# U item changed                             admin            write              
+# U item added                               admin            write              
+# 
+# software id = TUF2-K3WQ
+#
+# model = RB962UiGS-5HacT2HnT
+# serial number = BEC40BEB8D73
+/interface bridge
+add name=SWBR-1 vlan-filtering=yes
+/interface ethernet
+set [ find default-name=ether1 ] loop-protect=on
+set [ find default-name=ether2 ] loop-protect=on
+set [ find default-name=ether3 ] loop-protect=on
+set [ find default-name=ether4 ] loop-protect=on
+set [ find default-name=ether5 ] loop-protect=on
+set [ find default-name=sfp1 ] auto-negotiation=no loop-protect=on
+/interface wireless
+set [ find default-name=wlan1 ] antenna-gain=0 country=no_country_set frequency-mode=manual-txpower ssid=MikroTik
+set [ find default-name=wlan2 ] antenna-gain=0 country=no_country_set frequency-mode=manual-txpower ssid=MikroTik
+/interface vlan
+add interface=SWBR-1 name=v2_SWBR-1 vlan-id=2
+add disabled=yes interface=sfp1 name=v20_sfp1 vlan-id=20
+add disabled=yes interface=sfp1 name=v40_sfp1 vlan-id=40
+add disabled=yes interface=sfp1 name=v829_sfp1 vlan-id=829
+add disabled=yes interface=sfp1 name=v899_sfp1 vlan-id=899
+add disabled=yes interface=sfp1 name=v1015_sfp1 vlan-id=1015
+add disabled=yes interface=sfp1 name=v1032_sfp1 vlan-id=1032
+add disabled=yes interface=sfp1 name=v2015_sfp1 vlan-id=2015
+/interface wireless security-profiles
+set [ find default=yes ] supplicant-identity=MikroTik
+/ip hotspot profile
+set [ find default=yes ] html-directory=flash/hotspot
+/snmp community
+set [ find default=yes ] disabled=yes read-access=no security=private
+add addresses=10.10.3.34/32 authentication-password=Vn_FLD7_Bnz encryption-password=P1kfvaL23X name=smartics_pub security=private
+/user group
+set full policy="local,telnet,ssh,ftp,reboot,read,write,policy,test,winbox,password,web,sniff,sensitive,api,romon,dude,tikapp"
+/interface bridge port
+add bridge=SWBR-1 interface=ether1 pvid=20
+add bridge=SWBR-1 interface=ether2 pvid=20
+add bridge=SWBR-1 interface=ether3 pvid=20
+add bridge=SWBR-1 interface=ether4
+add bridge=SWBR-1 interface=ether5
+add bridge=SWBR-1 interface=sfp1
+/interface bridge vlan
+add bridge=SWBR-1 tagged=sfp1,ether4,SWBR-1 untagged=ether5 vlan-ids=2
+add bridge=SWBR-1 tagged=sfp1,ether4 vlan-ids=40
+add bridge=SWBR-1 tagged=sfp1,ether4 vlan-ids=829
+add bridge=SWBR-1 tagged=sfp1,ether4 vlan-ids=899
+add bridge=SWBR-1 tagged=sfp1,ether4 vlan-ids=1015
+add bridge=SWBR-1 tagged=sfp1,ether4 vlan-ids=1032
+add bridge=SWBR-1 tagged=sfp1,ether4 vlan-ids=2015
+add bridge=SWBR-1 tagged=sfp1,ether4 untagged=ether1,ether2,ether3 vlan-ids=20
+add bridge=SWBR-1 tagged=sfp1,ether4 vlan-ids=825
+add bridge=SWBR-1 tagged=sfp1,ether4 vlan-ids=826
+add bridge=SWBR-1 tagged=sfp1,ether4 vlan-ids=3015
+add bridge=SWBR-1 tagged=sfp1,ether4 vlan-ids=1045
+add bridge=SWBR-1 tagged=ether4,sfp1 vlan-ids=2038
+add bridge=SWBR-1 tagged=ether4,sfp1 vlan-ids=1038
+add bridge=SWBR-1 tagged=sfp1,ether4 vlan-ids=830
+add bridge=SWBR-1 tagged=ether4,sfp1 vlan-ids=200
+add bridge=SWBR-1 tagged=ether4,sfp1 vlan-ids=400
+add bridge=SWBR-1 tagged=sfp1,ether4 vlan-ids=300
+/ip dhcp-client
+add disabled=no interface=v2_SWBR-1
+/ip service
+set telnet disabled=yes
+set ftp disabled=yes
+set ssh port=12128
+set api disabled=yes
+set api-ssl disabled=yes
+/snmp
+set contact=helptech@smartics.ru enabled=yes engine-id=C4AD34331AE8 location=B14 trap-community=smartics_pub trap-generators=interfaces trap-interfaces=all trap-target=10.10.3.34 trap-version=3
+/system clock
+set time-zone-name=Europe/Moscow
+/system identity
+set name=MT1-B14-F4
+/system ntp client
+set enabled=yes primary-ntp=194.186.237.38 secondary-ntp=88.147.254.235
