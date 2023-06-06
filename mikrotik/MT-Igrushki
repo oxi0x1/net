@@ -5,6 +5,8 @@
 #   installed-version: 6.49.7
 # Flags: U - undoable, R - redoable, F - floating-undo 
 #   ACTION                                   BY               POLICY             
+# U item changed                             eduard           write              
+# U item changed                             eduard           write              
 # U changed snmp settings                    eduard           write              
 # U item changed                             eduard           write              
 # U ip service changed                       eduard           write              
@@ -646,7 +648,7 @@ add dont-require-permissions=no name=tst owner=eduard policy=ftp,reboot,read,wri
 add host=77.88.8.8 interval=2s timeout=5s
 add host=8.8.8.8 interval=2s timeout=5s
 /tool sniffer
-set file-name=out.pcap
+set file-limit=8000KiB file-name=rar.pcap filter-interface=all memory-limit=1500KiB only-headers=yes
 /tool traffic-generator packet-template
 add mac-protocol=arp name=tst-arp
 /tool traffic-generator stream
