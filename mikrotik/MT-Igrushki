@@ -5,6 +5,9 @@
 #   installed-version: 6.49.7
 # Flags: U - undoable, R - redoable, F - floating-undo 
 #   ACTION                                   BY               POLICY             
+# U route removed                            eduard           write              
+# U route removed                            eduard           write              
+# U route removed                            eduard           write              
 # U item changed                             eduard           write              
 # U item changed                             eduard           write              
 # U changed snmp settings                    eduard           write              
@@ -102,8 +105,6 @@
 # U route changed                            eduard           write              
 # U route changed                            eduard           write              
 # U filter rule added                        eduard           write              
-# U mangle rule changed                      eduard           write              
-# U device changed                           eduard           write              
 # 
 # software id = QSK2-CPZ1
 #
@@ -505,12 +506,9 @@ add comment="to megafon RM" distance=1 gateway=178.176.156.161 routing-mark=to-m
 add disabled=yes distance=1 gateway=10.70.0.1 pref-src=83.136.240.204 routing-mark=to-old-gw
 add distance=1 gateway=83.136.240.201 routing-mark=to-telros
 add check-gateway=ping comment="to megafon" distance=1 gateway=178.176.156.161
-add comment=TST disabled=yes distance=2 gateway=83.136.240.201
-add comment=TST disabled=yes distance=1 dst-address=1.0.0.1/32 gateway=83.136.240.201
 add distance=1 dst-address=10.0.0.0/8 gateway=10.70.0.1
 add distance=1 dst-address=10.199.0.0/24 gateway=L2TP_DO scope=50 target-scope=30
 add check-gateway=ping distance=1 dst-address=157.245.20.33/32 gateway=83.136.240.201
-add comment=TST disabled=yes distance=1 dst-address=157.245.20.33/32 gateway=83.136.240.201
 add distance=1 dst-address=192.168.0.0/16 gateway=10.70.0.1
 add disabled=yes distance=1 dst-address=192.168.1.0/24 gateway=192.168.0.84
 add distance=1 dst-address=192.168.3.0/24 gateway=10.10.5.100
