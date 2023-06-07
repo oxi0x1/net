@@ -1,0 +1,98 @@
+#              model: CRS326-24G-2S+
+#      serial-number: 9455098DE9BA
+#      firmware-type: dx3230L
+#   current-firmware: 6.42.5
+#   installed-version: 6.48.3
+# Flags: U - undoable, R - redoable, F - floating-undo 
+#   ACTION                                   BY               POLICY             
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U user oXi_backup_usr added                admin            write              
+#                                                             policy             
+# U user oxidized changed                    admin            write              
+#                                                             policy             
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# 
+# software id = VZ2E-9UPH
+#
+# model = CRS326-24G-2S+
+# serial number = 9455098DE9BA
+/interface bridge
+add name=SW_BR1 pvid=2 vlan-filtering=yes
+/interface ethernet
+set [ find default-name=ether1 ] comment="TO MT1-B20-F5"
+set [ find default-name=ether2 ] comment="TAG Bezopasnost, CopySystem, Polygraf, Infocomm"
+set [ find default-name=ether3 ] comment=Arton
+set [ find default-name=ether6 ] comment="TO HTTK_2"
+set [ find default-name=ether10 ] comment="\?\?\? TO MIKROTIK \?\?\?"
+/interface vlan
+add interface=SW_BR1 name=v2_SW_BR1 vlan-id=2
+add interface=ether24 name=v2_eth24 vlan-id=2
+/interface wireless security-profiles
+set [ find default=yes ] supplicant-identity=MikroTik
+/snmp community
+set [ find default=yes ] addresses=10.10.3.34/32 authentication-password=Vn_FLD7_Bnz encryption-password=P1kfvaL23X name=smartics_pub security=private
+/user group
+set full policy="local,telnet,ssh,ftp,reboot,read,write,policy,test,winbox,password,web,sniff,sensitive,api,romon,dude,tikapp"
+/interface bridge port
+add bridge=SW_BR1 interface=ether1
+add bridge=SW_BR1 interface=ether2
+add bridge=SW_BR1 interface=ether3 pvid=1005
+add bridge=SW_BR1 interface=ether4
+add bridge=SW_BR1 interface=ether5 pvid=1008
+add bridge=SW_BR1 interface=ether6
+add bridge=SW_BR1 interface=ether7 pvid=3005
+add bridge=SW_BR1 interface=ether8
+add bridge=SW_BR1 interface=ether9 pvid=1016
+add bridge=SW_BR1 interface=ether10 pvid=2016
+add bridge=SW_BR1 interface=ether11
+add bridge=SW_BR1 interface=ether12
+add bridge=SW_BR1 interface=sfp-sfpplus1
+add bridge=SW_BR1 interface=sfp-sfpplus2
+/ip neighbor discovery-settings
+set discover-interface-list=!dynamic
+/interface bridge vlan
+add bridge=SW_BR1 comment=MGMT tagged=ether1,sfp-sfpplus1,sfp-sfpplus2,SW_BR1,ether2 vlan-ids=2
+add bridge=SW_BR1 comment=Infocomm tagged=ether1,ether2 vlan-ids=1040
+add bridge=SW_BR1 comment=Arton tagged=ether1 untagged=ether3 vlan-ids=1005
+add bridge=SW_BR1 comment=MasterGroom tagged=ether1 untagged=ether5 vlan-ids=1008
+add bridge=SW_BR1 comment=HTTK tagged=ether1 untagged=ether9 vlan-ids=1016
+add bridge=SW_BR1 comment=Polygraf tagged=ether1,ether2 vlan-ids=1019
+add bridge=SW_BR1 comment="\CA\EE\EF\E8\F0\EE\E2\E0\EB\FC\ED\FB\E5 \F1\E8\F1\F2\E5\EC\FB" tagged=ether1,ether2 vlan-ids=1024
+add bridge=SW_BR1 comment=HTTK tagged=ether1,ether6,ether9 untagged=ether10 vlan-ids=2016
+add bridge=SW_BR1 comment=Arton tagged=ether3 untagged=ether7 vlan-ids=3005
+add bridge=SW_BR1 comment=Bezopasnost tagged=ether1,ether2,sfp-sfpplus1,sfp-sfpplus2 vlan-ids=1004
+/ip dhcp-client
+add disabled=no interface=ether23
+add disabled=no interface=v2_eth24
+add disabled=no interface=v2_SW_BR1
+/ip service
+set telnet disabled=yes
+set ftp disabled=yes
+set www disabled=yes
+set ssh address=10.10.3.42/32 port=12128
+set api disabled=yes
+set winbox port=28291
+set api-ssl disabled=yes
+/snmp
+set contact=helptech@smartics.ru enabled=yes engine-id=B869F45E19A7 location=B20 trap-generators=interfaces trap-interfaces=all trap-target=10.10.3.34 trap-version=3
+/system clock
+set time-zone-name=Europe/Moscow
+/system identity
+set name=MT1-B20-F3
+/system ntp client
+set enabled=yes primary-ntp=193.192.36.3 secondary-ntp=88.147.254.230
+/system routerboard settings
+set boot-os=router-os
