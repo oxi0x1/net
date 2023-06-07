@@ -5,9 +5,9 @@
 #   installed-version: 6.48.4
 # Flags: U - undoable, R - redoable, F - floating-undo 
 #   ACTION                                   BY               POLICY             
-# F user oXi_backup_usr added                admin            write              
+# U user oXi_backup_usr added                admin            write              
 #                                                             policy             
-# F user oxidized changed                    admin            write              
+# U user oxidized changed                    admin            write              
 #                                                             policy             
 # U ip service changed                       admin            write              
 # U item removed                             admin            write              
