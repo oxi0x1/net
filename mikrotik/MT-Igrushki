@@ -5,106 +5,6 @@
 #   installed-version: 6.49.7
 # Flags: U - undoable, R - redoable, F - floating-undo 
 #   ACTION                                   BY               POLICY             
-# U route changed                            eduard           write              
-# U route changed                            eduard           write              
-# U route changed                            eduard           write              
-# U device changed                           eduard           write              
-# U mangle rule changed                      eduard           write              
-# U mangle rule changed                      eduard           write              
-# U route changed                            eduard           write              
-# U route removed                            eduard           write              
-# U route removed                            eduard           write              
-# U route removed                            eduard           write              
-# U item changed                             eduard           write              
-# U item changed                             eduard           write              
-# U changed snmp settings                    eduard           write              
-# U item changed                             eduard           write              
-# U ip service changed                       eduard           write              
-# U ip service changed                       eduard           write              
-# U ip service changed                       eduard           write              
-# U filter rule changed                      admin-a          write              
-# U nat rule changed                         admin-a          write              
-# U nat rule changed                         admin-a          write              
-# U nat rule changed                         admin-a          write              
-# U nat rule changed                         admin-a          write              
-# U nat rule changed                         admin-a          write              
-# U nat rule moved                           admin-a          write              
-# U nat rule added                           admin-a          write              
-# U filter rule added                        admin-a          write              
-# U route added                              admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U device changed                           admin-a          write              
-# U device changed                           admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U device changed                           admin-a          write              
-# U device changed                           admin-a          write              
-# U route changed                            admin-a          write              
-# U mangle rule moved                        admin-a          write              
-# U mangle rule added                        admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U filter rule removed                      admin-a          write              
-# U filter rule added                        admin-a          write              
-# U route changed                            admin-a          write              
-# U device changed                           admin-a          write              
-# U device changed                           admin-a          write              
-# U route changed                            admin-a          write              
-# U route changed                            admin-a          write              
-# U address list entry removed               admin-a          write              
-# U address list entry removed               admin-a          write              
-# U address list entry changed               admin-a          write              
-# U address list entry changed               admin-a          write              
-# U address list entry added                 admin-a          write              
-# U address list entry added                 admin-a          write              
-# U route changed                            admin-a          write              
-# U route changed                            admin-a          write              
-# U device changed                           admin-a          write              
-# U device changed                           admin-a          write              
-# U mangle rule added                        admin-a          write              
-# U mangle rule added                        admin-a          write              
-# U mangle rule moved                        admin-a          write              
-# U mangle rule added                        admin-a          write              
-# U route changed                            admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U route changed                            admin-a          write              
-# U route changed                            admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U route changed                            admin-a          write              
-# U route changed                            admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U address list entry added                 admin-a          write              
-# U address list entry added                 admin-a          write              
-# U address list entry added                 admin-a          write              
-# U route changed                            admin-a          write              
-# U route changed                            admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule removed                      admin-a          write              
-# U mangle rule removed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U address changed                          admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U mangle rule changed                      admin-a          write              
-# U filter rule changed                      eduard           write              
-# U filter rule changed                      eduard           write              
-# U filter rule changed                      eduard           write              
-# U filter rule moved                        eduard           write              
-# U filter rule added                        eduard           write              
-# U filter rule changed                      eduard           write              
-# U filter rule changed                      eduard           write              
-# U filter rule changed                      eduard           write              
-# U route changed                            eduard           write              
 # 
 # software id = QSK2-CPZ1
 #
@@ -127,7 +27,7 @@ add fast-forward=no name=br_Wifi
 # channel: 5825/20-Ceee/ac(17dBm)+5935/80(17dBm), SSID: Allvia_5, CAPsMAN forwarding
 set [ find default-name=wlan1 ] ssid=MikroTik
 # managed by CAPsMAN
-# channel: 2412/20-Ce/gn(17dBm), SSID: Allvia, CAPsMAN forwarding
+# channel: 2452/20-Ce/gn(17dBm), SSID: Allvia, CAPsMAN forwarding
 set [ find default-name=wlan2 ] ssid=MikroTik
 /interface ethernet
 set [ find default-name=ether1 ] mac-address=74:4D:28:B5:CC:8B
@@ -503,8 +403,8 @@ add action=dst-nat chain=dstnat disabled=yes dst-address=178.176.156.181 dst-por
 add action=dst-nat chain=dstnat disabled=yes dst-address=178.176.156.181 dst-port=1368 protocol=tcp to-addresses=192.168.0.100 to-ports=3389
 /ip route
 add comment="to megafon RM" distance=1 gateway=178.176.156.161 routing-mark=to-megafon
-add disabled=yes distance=1 gateway=10.70.0.1 pref-src=83.136.240.204 routing-mark=to-old-gw
 add disabled=yes distance=1 gateway=83.136.240.201 routing-mark=to-telros
+add disabled=yes distance=1 gateway=10.70.0.1 pref-src=83.136.240.204 routing-mark=to-old-gw
 add check-gateway=ping comment="to megafon" distance=1 gateway=178.176.156.161
 add distance=1 dst-address=10.0.0.0/8 gateway=10.70.0.1
 add distance=1 dst-address=10.199.0.0/24 gateway=L2TP_DO scope=50 target-scope=30
