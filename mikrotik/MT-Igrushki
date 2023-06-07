@@ -5,6 +5,10 @@
 #   installed-version: 6.49.7
 # Flags: U - undoable, R - redoable, F - floating-undo 
 #   ACTION                                   BY               POLICY             
+# U mangle rule changed                      eduard           write              
+# U mangle rule changed                      eduard           write              
+# U address changed                          eduard           write              
+# U nat rule changed                         eduard           write              
 # 
 # software id = QSK2-CPZ1
 #
@@ -129,7 +133,7 @@ add address=192.168.0.10/24 interface=BR-2015_LocalNet network=192.168.0.0
 add address=192.168.98.1/24 interface=BR-3015_CAMS network=192.168.98.0
 add address=7.7.7.7 disabled=yes interface=Loopback network=7.7.7.7
 add address=10.253.253.2/24 interface=EOIP-over-L2TP network=10.253.253.0
-add address=83.136.240.204/29 interface=BR-300_Telros network=83.136.240.200
+add address=83.136.240.204/29 disabled=yes interface=BR-300_Telros network=83.136.240.200
 add address=178.176.156.181/27 interface=BR-400_Megafon network=178.176.156.160
 /ip dhcp-client
 add interface=BR-2015_LocalNet
@@ -369,8 +373,8 @@ add action=accept chain=forward disabled=yes dst-port=1194 in-interface=BR-1015_
 add action=accept chain=forward disabled=yes src-address=10.10.5.59
 add action=accept chain=forward disabled=yes dst-port=55777 protocol=udp src-address=213.79.65.82
 /ip firewall mangle
-add action=mark-connection chain=prerouting comment=megafon connection-mark=no-mark connection-state=!established,related in-interface=BR-400_Megafon new-connection-mark=from-megafon passthrough=yes
-add action=mark-routing chain=prerouting comment=megafon connection-mark=from-megafon dst-address-list=!LOCAL new-routing-mark=to-megafon passthrough=no
+add action=mark-connection chain=prerouting comment=megafon connection-mark=no-mark connection-state=!established,related disabled=yes in-interface=BR-400_Megafon new-connection-mark=from-megafon passthrough=yes
+add action=mark-routing chain=prerouting comment=megafon connection-mark=from-megafon disabled=yes dst-address-list=!LOCAL new-routing-mark=to-megafon passthrough=no
 add action=mark-connection chain=prerouting connection-mark=no-mark connection-state=!established,related disabled=yes in-interface=BR-300_Telros new-connection-mark=from-telros passthrough=yes
 add action=mark-routing chain=prerouting connection-mark=from-telros disabled=yes dst-address-list=!LOCAL in-interface=BR-300_Telros new-routing-mark=to-telros passthrough=no
 add action=mark-connection chain=output disabled=yes dst-address=157.245.20.33 new-connection-mark=from-telros passthrough=no
@@ -381,7 +385,7 @@ add action=mark-routing chain=prerouting comment=old-gate connection-mark=from-o
 add action=masquerade chain=srcnat comment="[zabbix agent check]" dst-address=10.199.0.10 protocol=icmp src-address=192.168.0.0/24
 add action=masquerade chain=srcnat out-interface=BR-1015_Igrushki
 add action=masquerade chain=srcnat out-interface=BR-400_Megafon
-add action=masquerade chain=srcnat out-interface=BR-300_Telros
+add action=masquerade chain=srcnat disabled=yes out-interface=BR-300_Telros
 add action=masquerade chain=srcnat disabled=yes out-interface=*F00635
 add action=dst-nat chain=dstnat dst-address=10.70.0.15 dst-port=10051 protocol=tcp to-addresses=192.168.0.62 to-ports=10051
 add action=dst-nat chain=dstnat comment="\CF\F0\EE\E1\F0\EE\F1 \EF\EE\F0\F2\EE\E2 \F1 \E1\E5\EB\EE\E3\EE IP" disabled=yes dst-address=10.70.0.15 dst-port=1380 protocol=tcp to-addresses=192.168.0.3 to-ports=3389
