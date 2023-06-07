@@ -1,0 +1,87 @@
+#              model: RouterBOARD 962UiGS-5HacT2HnT
+#      serial-number: 6F1206D263DE
+#      firmware-type: qca9550L
+#   current-firmware: 3.31
+#   installed-version: 6.48.4
+# Flags: U - undoable, R - redoable, F - floating-undo 
+#   ACTION                                   BY               POLICY             
+# F user oXi_backup_usr added                admin            write              
+#                                                             policy             
+# F user oxidized changed                    admin            write              
+#                                                             policy             
+# U ip service changed                       admin            write              
+# U item removed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item added                               admin            write              
+# U device changed                           admin            write              
+# U item changed                             admin            write              
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# 
+# software id = BBFN-8LVT
+#
+# model = RouterBOARD 962UiGS-5HacT2HnT
+# serial number = 6F1206D263DE
+/interface bridge
+add name=SW_BR vlan-filtering=yes
+/interface ethernet
+set [ find default-name=ether1 ] comment="TO MT1-B20-F3"
+set [ find default-name=ether2 ] auto-negotiation=no speed=100Mbps
+set [ find default-name=ether4 ] comment="TO MEGAFON !!!" speed=10Mbps
+set [ find default-name=ether5 ] auto-negotiation=no poe-out=off speed=10Mbps
+set [ find default-name=sfp1 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full auto-negotiation=no comment="TO F_CRS SFPP1"
+/interface wireless
+set [ find default-name=wlan1 ] antenna-gain=0 country=no_country_set frequency-mode=manual-txpower ssid=MikroTik station-roaming=enabled
+set [ find default-name=wlan2 ] antenna-gain=0 country=no_country_set frequency-mode=manual-txpower ssid=MikroTik station-roaming=enabled
+/interface vlan
+add interface=SW_BR name=v2_SW_BR vlan-id=2
+/interface wireless security-profiles
+set [ find default=yes ] supplicant-identity=MikroTik
+/snmp community
+set [ find default=yes ] addresses=10.10.3.34/32,10.10.4.0/24,10.10.6.0/24 authentication-password=Vn_FLD7_Bnz encryption-password=P1kfvaL23X name=smartics_pub security=private
+/user group
+set full policy="local,telnet,ssh,ftp,reboot,read,write,policy,test,winbox,password,web,sniff,sensitive,api,romon,dude,tikapp"
+/interface bridge port
+add bridge=SW_BR interface=ether1
+add bridge=SW_BR interface=ether2 pvid=20
+add bridge=SW_BR interface=ether3
+add bridge=SW_BR interface=ether4 pvid=400
+add bridge=SW_BR interface=ether5 pvid=20
+add bridge=SW_BR interface=sfp1
+/ip neighbor discovery-settings
+set discover-interface-list=!dynamic
+/interface bridge vlan
+add bridge=SW_BR tagged=SW_BR,sfp1,ether1 untagged=ether5 vlan-ids=2
+add bridge=SW_BR tagged=sfp1 untagged=ether4 vlan-ids=400
+add bridge=SW_BR tagged=sfp1,ether1,ether2 vlan-ids=1004
+add bridge=SW_BR tagged=sfp1,ether1,ether2 vlan-ids=1005
+add bridge=SW_BR tagged=sfp1,ether1,ether2 vlan-ids=1016
+add bridge=SW_BR tagged=sfp1,ether1,ether2 vlan-ids=1019
+add bridge=SW_BR tagged=sfp1,ether1,ether2 vlan-ids=1024
+add bridge=SW_BR tagged=sfp1,ether1,ether2 vlan-ids=1040
+add bridge=SW_BR tagged=sfp1,ether1,ether2 vlan-ids=2016
+add bridge=SW_BR tagged=sfp1,ether1 untagged=ether2,ether5 vlan-ids=20
+/ip dhcp-client
+add !dhcp-options disabled=no interface=v2_SW_BR
+/ip service
+set telnet disabled=yes
+set ftp disabled=yes
+set www disabled=yes
+set ssh address=10.10.3.42/32 port=12128
+set api disabled=yes
+set api-ssl disabled=yes
+/snmp
+set contact=helptech@smartics.ru enabled=yes engine-id=6C3B6B27A51A location=B20 trap-generators=interfaces trap-interfaces=all trap-target=10.10.3.34 trap-version=3
+/system clock
+set time-zone-name=Europe/Moscow
+/system identity
+set name=MT1-B20-F5
+/system ntp client
+set enabled=yes primary-ntp=185.22.60.71 secondary-ntp=88.147.254.235
+/system package update
+set channel=long-term
+/tool sniffer
+set file-name=kkk-meg filter-interface=sfp1 memory-limit=2000KiB
