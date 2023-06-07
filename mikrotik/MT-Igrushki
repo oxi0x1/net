@@ -5,6 +5,13 @@
 #   installed-version: 6.49.7
 # Flags: U - undoable, R - redoable, F - floating-undo 
 #   ACTION                                   BY               POLICY             
+# U route changed                            eduard           write              
+# U route changed                            eduard           write              
+# U route changed                            eduard           write              
+# U device changed                           eduard           write              
+# U mangle rule changed                      eduard           write              
+# U mangle rule changed                      eduard           write              
+# U route changed                            eduard           write              
 # U route removed                            eduard           write              
 # U route removed                            eduard           write              
 # U route removed                            eduard           write              
@@ -98,13 +105,6 @@
 # U filter rule changed                      eduard           write              
 # U filter rule changed                      eduard           write              
 # U route changed                            eduard           write              
-# U route changed                            eduard           write              
-# U route changed                            eduard           write              
-# U route added                              eduard           write              
-# U route added                              eduard           write              
-# U route changed                            eduard           write              
-# U route changed                            eduard           write              
-# U filter rule added                        eduard           write              
 # 
 # software id = QSK2-CPZ1
 #
@@ -115,7 +115,7 @@ add band=2ghz-b/g/n control-channel-width=20mhz name=ch2
 add band=5ghz-a/n/ac control-channel-width=20mhz name=ch5
 /interface bridge
 add disabled=yes name=BR-200_ER-Telros
-add name=BR-300_Telros
+add disabled=yes name=BR-300_Telros
 add name=BR-400_Megafon
 add fast-forward=no name=BR-1015_Igrushki
 add name=BR-2015_LocalNet protocol-mode=none
@@ -471,8 +471,8 @@ add action=accept chain=forward disabled=yes dst-port=55777 protocol=udp src-add
 /ip firewall mangle
 add action=mark-connection chain=prerouting comment=megafon connection-mark=no-mark connection-state=!established,related in-interface=BR-400_Megafon new-connection-mark=from-megafon passthrough=yes
 add action=mark-routing chain=prerouting comment=megafon connection-mark=from-megafon dst-address-list=!LOCAL new-routing-mark=to-megafon passthrough=no
-add action=mark-connection chain=prerouting connection-mark=no-mark connection-state=!established,related in-interface=BR-300_Telros new-connection-mark=from-telros passthrough=yes
-add action=mark-routing chain=prerouting connection-mark=from-telros dst-address-list=!LOCAL in-interface=BR-300_Telros new-routing-mark=to-telros passthrough=no
+add action=mark-connection chain=prerouting connection-mark=no-mark connection-state=!established,related disabled=yes in-interface=BR-300_Telros new-connection-mark=from-telros passthrough=yes
+add action=mark-routing chain=prerouting connection-mark=from-telros disabled=yes dst-address-list=!LOCAL in-interface=BR-300_Telros new-routing-mark=to-telros passthrough=no
 add action=mark-connection chain=output disabled=yes dst-address=157.245.20.33 new-connection-mark=from-telros passthrough=no
 add action=mark-routing chain=output disabled=yes dst-address=157.245.20.33 new-routing-mark=to-telros passthrough=yes
 add action=mark-connection chain=prerouting comment=old-gate connection-mark=no-mark disabled=yes in-interface=BR-1015_Igrushki new-connection-mark=from-old-gw passthrough=yes
@@ -504,11 +504,11 @@ add action=dst-nat chain=dstnat disabled=yes dst-address=178.176.156.181 dst-por
 /ip route
 add comment="to megafon RM" distance=1 gateway=178.176.156.161 routing-mark=to-megafon
 add disabled=yes distance=1 gateway=10.70.0.1 pref-src=83.136.240.204 routing-mark=to-old-gw
-add distance=1 gateway=83.136.240.201 routing-mark=to-telros
+add disabled=yes distance=1 gateway=83.136.240.201 routing-mark=to-telros
 add check-gateway=ping comment="to megafon" distance=1 gateway=178.176.156.161
 add distance=1 dst-address=10.0.0.0/8 gateway=10.70.0.1
 add distance=1 dst-address=10.199.0.0/24 gateway=L2TP_DO scope=50 target-scope=30
-add check-gateway=ping distance=1 dst-address=157.245.20.33/32 gateway=83.136.240.201
+add check-gateway=ping disabled=yes distance=1 dst-address=157.245.20.33/32 gateway=83.136.240.201
 add distance=1 dst-address=192.168.0.0/16 gateway=10.70.0.1
 add disabled=yes distance=1 dst-address=192.168.1.0/24 gateway=192.168.0.84
 add distance=1 dst-address=192.168.3.0/24 gateway=10.10.5.100
