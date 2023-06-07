@@ -5,12 +5,12 @@
 #   installed-version: 6.48.6
 # Flags: U - undoable, R - redoable, F - floating-undo 
 #   ACTION                                   BY               POLICY             
-# F ip service changed                       admin            write              
-# F ip service changed                       admin            write              
-# F ip service changed                       admin            write              
-# F ip service changed                       admin            write              
-# F ip service changed                       admin            write              
-# F ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
 # U user oXi_backup_usr added                admin            write              
 #                                                             policy             
 # U bridge port changed                      admin            write              
