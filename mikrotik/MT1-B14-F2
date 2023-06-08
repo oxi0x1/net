@@ -6,6 +6,8 @@
 # Flags: U - undoable, R - redoable, F - floating-undo 
 #   ACTION                                   BY               POLICY             
 # U log rule added                           admin            write              
+# U log action changed                       admin            write              
+# U log rule added                           admin            write              
 # U log rule added                           admin            write              
 # U log rule added                           admin            write              
 # U log action added                         admin            write              
@@ -156,6 +158,7 @@ set name=MT1-B14-F2
 add action=logsrv topics=info
 add action=logsrv topics=system
 add action=logsrv topics=script
+add action=logsrv topics=account
 /system ntp client
 set enabled=yes primary-ntp=91.206.16.3 secondary-ntp=88.147.254.230
 /system routerboard settings
