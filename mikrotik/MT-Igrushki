@@ -1,0 +1,557 @@
+#              model: RB4011iGS+5HacQ2HnD
+#      serial-number: B8E00ADA5D81
+#      firmware-type: al2
+#   current-firmware: 6.49.7
+#   installed-version: 6.49.7
+# Flags: U - undoable, R - redoable, F - floating-undo 
+#   ACTION                                   BY               POLICY             
+# U mangle rule changed                      eduard           write              
+# U mangle rule changed                      eduard           write              
+# U address changed                          eduard           write              
+# U nat rule changed                         eduard           write              
+# 
+# software id = QSK2-CPZ1
+#
+# model = RB4011iGS+5HacQ2HnD
+# serial number = B8E00ADA5D81
+/caps-man channel
+add band=2ghz-b/g/n control-channel-width=20mhz name=ch2
+add band=5ghz-a/n/ac control-channel-width=20mhz name=ch5
+/interface bridge
+add disabled=yes name=BR-200_ER-Telros
+add disabled=yes name=BR-300_Telros
+add name=BR-400_Megafon
+add fast-forward=no name=BR-1015_Igrushki
+add name=BR-2015_LocalNet protocol-mode=none
+add name=BR-3015_CAMS
+add name=Loopback
+add fast-forward=no name=br_Wifi
+/interface wireless
+# managed by CAPsMAN
+# channel: 5825/20-Ceee/ac(17dBm)+5935/80(17dBm), SSID: Allvia_5, CAPsMAN forwarding
+set [ find default-name=wlan1 ] ssid=MikroTik
+# managed by CAPsMAN
+# channel: 2452/20-Ce/gn(17dBm), SSID: Allvia, CAPsMAN forwarding
+set [ find default-name=wlan2 ] ssid=MikroTik
+/interface ethernet
+set [ find default-name=ether1 ] mac-address=74:4D:28:B5:CC:8B
+set [ find default-name=ether2 ] loop-protect=on mac-address=74:4D:28:B5:CC:8C
+set [ find default-name=ether3 ] loop-protect=on mac-address=74:4D:28:B5:CC:8D
+set [ find default-name=ether4 ] loop-protect=on mac-address=74:4D:28:B5:CC:8E
+set [ find default-name=ether5 ] mac-address=74:4D:28:B5:CC:8F
+set [ find default-name=ether6 ] mac-address=74:4D:28:B5:CC:90
+set [ find default-name=ether7 ] mac-address=74:4D:28:B5:CC:91
+set [ find default-name=ether8 ] mac-address=74:4D:28:B5:CC:92
+set [ find default-name=ether9 ] mac-address=74:4D:28:B5:CC:93
+set [ find default-name=ether10 ] mac-address=74:4D:28:B5:CC:94
+set [ find default-name=sfp-sfpplus1 ] mac-address=74:4D:28:B5:CC:95
+/interface l2tp-client
+add connect-to=157.245.20.33 disabled=no ipsec-secret=vpn137210 name=L2TP_DO password="123190e091e9Q)01123" use-ipsec=yes user=clientsidemt
+/interface ovpn-client
+add cipher=null connect-to=10.199.0.10 disabled=yes mac-address=02:0B:40:03:29:3D mode=ethernet name=OVPN_DO_step2 password=sda1390jsia-1 user=OVPN_IGRU
+/interface eoip
+add local-address=10.199.0.12 mac-address=02:15:E4:FA:17:73 name=EOIP-over-L2TP remote-address=10.199.0.10 tunnel-id=199
+/interface vlan
+add disabled=yes interface=ether1 name=v200_eth1 vlan-id=200
+add interface=ether1 name=v300_eth1 vlan-id=300
+add interface=ether1 name=v400_eth1 vlan-id=400
+add interface=ether1 name=v1015_eth1 vlan-id=1015
+add interface=EOIP-over-L2TP mtu=1300 name=v2015_EOIP vlan-id=2015
+add interface=ether1 loop-protect=on name=v2015_eth1 vlan-id=2015
+add interface=ether1 name=v3015_eth1 vlan-id=3015
+/caps-man datapath
+add bridge=br_Wifi name=datapath1
+/caps-man security
+add authentication-types=wpa2-psk encryption=aes-ccm name=security1 passphrase=6699669969
+/caps-man configuration
+add channel=ch2 country=russia2 datapath=datapath1 distance=dynamic mode=ap name=cfg1 security=security1 ssid=Allvia
+add channel=ch5 country=russia2 datapath=datapath1 distance=dynamic mode=ap name=cfg2 security=security1 ssid=Allvia_5
+/interface ethernet switch port
+set 0 default-vlan-id=0
+set 1 default-vlan-id=0
+set 2 default-vlan-id=0
+set 3 default-vlan-id=0
+set 4 default-vlan-id=0
+set 5 default-vlan-id=0
+set 6 default-vlan-id=0
+set 7 default-vlan-id=0
+set 8 default-vlan-id=0
+set 9 default-vlan-id=0
+set 10 default-vlan-id=0
+set 11 default-vlan-id=0
+/interface wireless security-profiles
+set [ find default=yes ] supplicant-identity=MikroTik
+/ip pool
+add name=pool2 ranges=192.168.0.50-192.168.0.254
+add name=pool_WiFi ranges=192.168.100.50-192.168.100.254
+add name=pool_VPN ranges=192.168.5.100-192.168.5.200
+add name=pool_CAMS ranges=192.168.98.2-192.168.98.254
+/ip dhcp-server
+add address-pool=pool2 disabled=no interface=BR-2015_LocalNet name=dhcp1
+add address-pool=pool_WiFi disabled=no interface=br_Wifi name=dhcp_WiFi
+add address-pool=pool_CAMS disabled=no interface=BR-3015_CAMS name=dhcp_CAMS
+/ppp profile
+add change-tcp-mss=yes local-address=10.10.5.1 name=l2tp_Profile remote-address=pool_VPN use-compression=yes
+/snmp community
+set [ find default=yes ] addresses=192.168.0.62/32,10.10.3.34/32 authentication-password=Hfd_ioi3_J83Lcv_1w comment=READ encryption-password=FJ993kLKde2 name=igrushki_pub security=private
+/system logging action
+add name=zabbix remote=10.10.3.42 target=remote
+/user group
+set full policy="local,telnet,ssh,ftp,reboot,read,write,policy,test,winbox,password,web,sniff,sensitive,api,romon,dude,tikapp"
+/caps-man manager
+set enabled=yes
+/caps-man provisioning
+add action=create-dynamic-enabled hw-supported-modes=ac,an master-configuration=cfg2
+add action=create-dynamic-enabled hw-supported-modes=b,gn master-configuration=cfg1
+/interface bridge port
+add bridge=BR-2015_LocalNet interface=ether2
+add bridge=BR-2015_LocalNet interface=ether3
+add bridge=BR-2015_LocalNet interface=ether4
+add bridge=BR-2015_LocalNet interface=ether5
+add bridge=BR-1015_Igrushki interface=v1015_eth1
+add bridge=BR-2015_LocalNet interface=v2015_eth1
+add bridge=BR-3015_CAMS interface=v3015_eth1
+add bridge=BR-2015_LocalNet interface=v2015_EOIP
+add bridge=BR-400_Megafon interface=v400_eth1
+add bridge=BR-200_ER-Telros disabled=yes interface=v200_eth1
+add bridge=BR-300_Telros interface=v300_eth1
+/ip neighbor discovery-settings
+set discover-interface-list=!dynamic
+/interface l2tp-server server
+set allow-fast-path=yes authentication=mschap1,mschap2 default-profile=l2tp_Profile enabled=yes ipsec-secret=ipseckey max-mru=1400 max-mtu=1400 use-ipsec=yes
+/interface ovpn-server server
+set certificate=server.crt_0 cipher=blowfish128,aes128,aes192,aes256 default-profile=l2tp_Profile enabled=yes max-mtu=1400 require-client-certificate=yes
+/interface pptp-server server
+set default-profile=l2tp_Profile enabled=yes max-mru=1440 max-mtu=1440
+/interface wireless cap
+# 
+set caps-man-addresses=192.168.0.1 enabled=yes interfaces=wlan1,wlan2
+/ip address
+add address=192.168.0.1/24 interface=BR-2015_LocalNet network=192.168.0.0
+add address=192.168.100.1/24 interface=br_Wifi network=192.168.100.0
+add address=192.168.0.10/24 interface=BR-2015_LocalNet network=192.168.0.0
+add address=192.168.98.1/24 interface=BR-3015_CAMS network=192.168.98.0
+add address=7.7.7.7 disabled=yes interface=Loopback network=7.7.7.7
+add address=10.253.253.2/24 interface=EOIP-over-L2TP network=10.253.253.0
+add address=83.136.240.204/29 disabled=yes interface=BR-300_Telros network=83.136.240.200
+add address=178.176.156.181/27 interface=BR-400_Megafon network=178.176.156.160
+/ip dhcp-client
+add interface=BR-2015_LocalNet
+add add-default-route=no disabled=no interface=BR-1015_Igrushki
+/ip dhcp-server alert
+add alert-timeout=10s disabled=no interface=BR-2015_LocalNet on-alert="/tool fetch url=\\\"https://api.telegram.org/bot326215219:AAEBBG6NGikAj7MHNFnAXvqfVqT6Shc8inE/sendMessage\\\?chat_id=-189412423&text=Arendator IGRUSHKI ALERT: Unauthorized DHCP-Server on interface \\\$interface\""
+/ip dhcp-server config
+set store-leases-disk=10m
+/ip dhcp-server lease
+add address=192.168.0.101 client-id=1:68:7:15:2b:3f:ea mac-address=68:07:15:2B:3F:EA server=dhcp1
+add address=192.168.0.120 client-id=1:38:d5:47:7b:bd:3b mac-address=38:D5:47:7B:BD:3B server=dhcp1
+add address=192.168.0.102 client-id=1:74:d4:35:63:db:37 mac-address=74:D4:35:63:DB:37 server=dhcp1
+add address=192.168.0.105 client-id=1:48:5b:39:f7:65:89 mac-address=48:5B:39:F7:65:89 server=dhcp1
+add address=192.168.0.25 client-id=1:0:17:c8:1a:47:d9 mac-address=00:17:C8:1A:47:D9 server=dhcp1
+add address=192.168.0.4 client-id=1:0:c:29:7d:2f:4a comment="SQL Server" mac-address=00:0C:29:7D:2F:4A server=dhcp1 use-src-mac=yes
+add address=192.168.0.98 client-id=1:40:9f:38:6b:51:1a mac-address=40:9F:38:6B:51:1A server=dhcp1
+add address=192.168.0.166 client-id=1:0:17:c8:74:19:36 comment=office1 mac-address=00:17:C8:74:19:36 server=dhcp1
+add address=192.168.0.52 client-id=1:0:25:ab:9c:74:9f mac-address=00:25:AB:9C:74:9F server=dhcp1
+add address=192.168.0.93 client-id=1:0:25:ab:9a:2f:b1 mac-address=00:25:AB:9A:2F:B1 server=dhcp1
+add address=192.168.0.80 client-id=1:2c:56:dc:4d:53:5f mac-address=2C:56:DC:4D:53:5F server=dhcp1
+add address=192.168.0.111 client-id=1:0:17:c8:3b:20:80 comment=office2 mac-address=00:17:C8:3B:20:80 server=dhcp1
+add address=192.168.0.113 client-id=1:0:17:c8:3b:1f:6a comment=BUH mac-address=00:17:C8:3B:1F:6A server=dhcp1
+add address=192.168.0.65 client-id=1:38:d5:47:7b:a0:fd mac-address=38:D5:47:7B:A0:FD server=dhcp1
+add address=192.168.0.129 client-id=1:74:d4:35:62:50:4f mac-address=74:D4:35:62:50:4F server=dhcp1
+add address=192.168.0.135 mac-address=00:0C:29:01:99:24 server=dhcp1
+add address=192.168.0.95 client-id=1:74:d2:1d:5:96:94 mac-address=74:D2:1D:05:96:94 server=dhcp1
+add address=192.168.0.198 client-id=1:4c:d1:a1:75:a4:78 mac-address=4C:D1:A1:75:A4:78 server=dhcp1
+add address=192.168.0.70 always-broadcast=yes client-id=1:58:c5:cb:c2:b4:89 mac-address=58:C5:CB:C2:B4:89 server=dhcp1
+add address=192.168.0.3 always-broadcast=yes client-id=1:0:c:29:a8:3c:e mac-address=00:0C:29:A8:3C:0E server=dhcp1 use-src-mac=yes
+add address=192.168.0.124 mac-address=00:0C:29:83:5C:7B server=dhcp1
+add address=192.168.0.54 client-id=1:0:c:29:dd:76:9a mac-address=00:0C:29:DD:76:9A server=dhcp1
+add address=192.168.0.63 client-id=1:30:65:ec:c:16:88 mac-address=30:65:EC:0C:16:88 server=dhcp1
+add address=192.168.0.12 client-id=1:0:50:56:bd:4c:39 mac-address=00:50:56:BD:4C:39 server=dhcp1 use-src-mac=yes
+add address=192.168.0.17 client-id=1:0:50:56:bd:da:1c mac-address=00:50:56:BD:DA:1C server=dhcp1
+add address=192.168.0.11 client-id=1:0:c:29:36:68:b7 mac-address=00:0C:29:36:68:B7 server=dhcp1
+add address=192.168.0.28 client-id=1:0:50:56:bd:f9:10 mac-address=00:50:56:BD:F9:10 server=dhcp1
+add address=192.168.0.22 client-id=1:0:c:29:76:9d:4c mac-address=00:0C:29:76:9D:4C server=dhcp1
+add address=192.168.0.76 client-id=1:3c:2a:f4:9:95:c7 comment=Brother_PC4 mac-address=3C:2A:F4:09:95:C7 server=dhcp1
+add address=192.168.0.78 client-id=1:3c:52:82:2a:fa:76 comment=HP132mfp mac-address=3C:52:82:2A:FA:76 server=dhcp1
+add address=192.168.0.31 client-id=1:0:c:29:1:19:51 mac-address=00:0C:29:01:19:51 server=dhcp1
+add address=192.168.0.32 client-id=1:0:c:29:8:b6:5a mac-address=00:0C:29:08:B6:5A server=dhcp1
+add address=192.168.0.82 client-id=1:50:9a:4c:3b:35:43 mac-address=50:9A:4C:3B:35:43 server=dhcp1
+add address=192.168.0.85 client-id=1:0:c:29:b1:a4:c8 mac-address=00:0C:29:B1:A4:C8 server=dhcp1
+add address=192.168.0.173 client-id=1:2c:56:dc:4d:ac:9f mac-address=2C:56:DC:4D:AC:9F server=dhcp1
+add address=192.168.0.53 client-id=1:6c:3b:6b:8d:8a:79 comment="mAP sklad" mac-address=6C:3B:6B:8D:8A:79 server=dhcp1
+add address=192.168.0.55 client-id=1:0:50:56:9f:7f:d0 mac-address=00:50:56:9F:7F:D0 server=dhcp1
+add address=192.168.0.59 client-id=1:0:50:56:9f:16:6 mac-address=00:50:56:9F:16:06 server=dhcp1
+add address=192.168.0.83 client-id=1:0:50:56:9f:76:1a mac-address=00:50:56:9F:76:1A server=dhcp1
+add address=192.168.0.90 client-id=1:98:ee:cb:8e:ca:f8 comment=BUH-IRINA mac-address=98:EE:CB:8E:CA:F8 server=dhcp1
+add address=192.168.98.2 client-id=1:6c:3b:6b:8d:8a:79 comment="mAP sklad CAMS" mac-address=6C:3B:6B:8D:8A:79 server=dhcp_CAMS
+add address=192.168.98.4 client-id=1:a0:bd:1d:b8:b0:ce mac-address=A0:BD:1D:B8:B0:CE server=dhcp_CAMS
+add address=192.168.98.7 client-id=1:ec:c8:9c:44:fd:33 mac-address=EC:C8:9C:44:FD:33 server=dhcp_CAMS
+add address=192.168.98.8 client-id=1:f0:23:b9:57:7c:20 mac-address=F0:23:B9:57:7C:20 server=dhcp_CAMS
+add address=192.168.98.9 client-id=1:ec:c8:9c:44:fe:2d mac-address=EC:C8:9C:44:FE:2D server=dhcp_CAMS
+add address=192.168.98.10 client-id=1:ec:c8:9c:44:fe:27 mac-address=EC:C8:9C:44:FE:27 server=dhcp_CAMS
+add address=192.168.98.11 client-id=1:ec:c8:9c:44:fd:37 mac-address=EC:C8:9C:44:FD:37 server=dhcp_CAMS
+add address=192.168.98.13 client-id=1:ac:cb:51:74:dc:e0 mac-address=AC:CB:51:74:DC:E0 server=dhcp_CAMS
+add address=192.168.98.14 client-id=1:ec:c8:9c:44:fe:2e mac-address=EC:C8:9C:44:FE:2E server=dhcp_CAMS
+add address=192.168.98.5 client-id=ff:82:ea:15:b6:0:1:0:1:28:81:b6:c0:b4:a3:82:ea:15:b6 mac-address=B4:A3:82:EA:15:B6 server=dhcp_CAMS
+add address=192.168.98.15 client-id=1:ac:cb:51:74:dd:8 mac-address=AC:CB:51:74:DD:08 server=dhcp_CAMS
+add address=192.168.0.81 client-id=1:2c:f0:5d:85:ce:2b mac-address=2C:F0:5D:85:CE:2B server=dhcp1
+add address=192.168.98.6 client-id=1:ec:c8:9c:44:fd:4c mac-address=EC:C8:9C:44:FD:4C server=dhcp_CAMS
+add address=192.168.0.5 client-id=1:0:c:29:8a:a1:30 mac-address=00:0C:29:8A:A1:30 server=dhcp1
+add address=192.168.0.89 client-id=1:0:c:29:a1:24:c3 mac-address=00:0C:29:A1:24:C3 server=dhcp1
+add address=192.168.0.16 client-id=1:0:c:29:6c:26:4c mac-address=00:0C:29:6C:26:4C server=dhcp1
+add address=192.168.0.50 client-id=1:0:c:29:25:cf:c1 mac-address=00:0C:29:25:CF:C1 server=dhcp1
+add address=192.168.0.19 client-id=1:0:c:29:db:68:ba mac-address=00:0C:29:DB:68:BA server=dhcp1
+add address=192.168.0.15 client-id=1:0:c:29:de:34:c9 mac-address=00:0C:29:DE:34:C9 server=dhcp1 use-src-mac=yes
+add address=192.168.0.18 client-id=1:0:c:29:38:fc:60 mac-address=00:0C:29:38:FC:60 server=dhcp1
+add address=192.168.0.13 client-id=1:0:c:29:72:8b:c2 mac-address=00:0C:29:72:8B:C2 server=dhcp1 use-src-mac=yes
+add address=192.168.0.14 client-id=1:0:c:29:b8:be:b0 mac-address=00:0C:29:B8:BE:B0 server=dhcp1 use-src-mac=yes
+add address=192.168.0.230 client-id=1:0:50:56:92:78:d1 mac-address=00:50:56:92:78:D1 server=dhcp1
+add address=192.168.0.231 client-id=1:0:50:56:92:7a:3f mac-address=00:50:56:92:7A:3F server=dhcp1
+add address=192.168.0.232 client-id=1:0:50:56:92:b5:ef mac-address=00:50:56:92:B5:EF server=dhcp1
+add address=192.168.0.234 client-id=1:0:50:56:92:34:22 mac-address=00:50:56:92:34:22 server=dhcp1
+add address=192.168.0.233 client-id=1:0:50:56:92:8a:1d mac-address=00:50:56:92:8A:1D server=dhcp1
+add address=192.168.0.235 client-id=1:0:50:56:92:34:87 mac-address=00:50:56:92:34:87 server=dhcp1
+add address=192.168.0.236 client-id=1:0:50:56:92:f4:f mac-address=00:50:56:92:F4:0F server=dhcp1
+add address=192.168.0.237 client-id=1:0:50:56:92:fe:1c mac-address=00:50:56:92:FE:1C server=dhcp1
+add address=192.168.0.238 client-id=1:0:50:56:92:b9:a8 mac-address=00:50:56:92:B9:A8 server=dhcp1
+add address=192.168.0.239 client-id=1:0:50:56:92:47:8e mac-address=00:50:56:92:47:8E server=dhcp1
+add address=192.168.0.240 client-id=1:0:50:56:92:25:14 mac-address=00:50:56:92:25:14 server=dhcp1
+add address=192.168.0.241 client-id=1:0:50:56:92:b2:75 mac-address=00:50:56:92:B2:75 server=dhcp1
+add address=192.168.0.162 client-id=1:0:17:c8:d7:b3:da comment="PRINT 2235 OFFICE1" mac-address=00:17:C8:D7:B3:DA server=dhcp1
+add address=192.168.0.242 client-id=1:0:50:56:92:f4:27 mac-address=00:50:56:92:F4:27 server=dhcp1
+add address=192.168.0.161 comment="PRINTER ERIKETOK SKLAD" mac-address=6C:C1:47:0A:60:22 server=dhcp1
+add address=192.168.100.245 client-id=1:3c:f8:62:cb:bf:15 mac-address=3C:F8:62:CB:BF:15 server=dhcp_WiFi
+add address=192.168.0.86 client-id=1:d8:5e:d3:15:66:b8 mac-address=D8:5E:D3:15:66:B8 server=dhcp1
+add address=192.168.0.112 comment="\CF\F0\E8\ED\F2\E5\F0 \FD\F2\E8\EA\E5\F2\EE\EA" mac-address=62:7F:73:E2:28:A7 server=dhcp1
+add address=192.168.0.244 client-id=1:0:50:56:92:ae:b6 mac-address=00:50:56:92:AE:B6 server=dhcp1
+add address=192.168.0.243 client-id=1:0:50:56:92:b3:e2 mac-address=00:50:56:92:B3:E2 server=dhcp1
+add address=192.168.0.245 client-id=1:0:50:56:92:96:85 mac-address=00:50:56:92:96:85 server=dhcp1
+add address=192.168.0.20 client-id=1:0:c:29:75:a7:4e mac-address=00:0C:29:75:A7:4E server=dhcp1
+add address=192.168.0.73 client-id=1:0:c:29:17:97:a3 mac-address=00:0C:29:17:97:A3 server=dhcp1
+add address=192.168.0.74 client-id=1:0:17:c8:7c:ea:4c mac-address=00:17:C8:7C:EA:4C server=dhcp1
+add address=192.168.0.246 client-id=1:0:c:29:a0:d7:5e mac-address=00:0C:29:A0:D7:5E server=dhcp1
+add address=192.168.0.165 client-id=1:d8:5e:d3:15:67:1a mac-address=D8:5E:D3:15:67:1A server=dhcp1
+add address=192.168.0.23 client-id=1:0:50:56:92:24:f4 mac-address=00:50:56:92:24:F4 server=dhcp1
+add address=192.168.0.254 client-id=1:2:fd:f3:54:f3:b1 mac-address=02:FD:F3:54:F3:B1 server=dhcp1
+add address=192.168.0.247 client-id=1:0:50:56:92:3f:32 mac-address=00:50:56:92:3F:32 server=dhcp1
+add address=192.168.0.21 client-id=1:0:c:29:94:cb:e7 mac-address=00:0C:29:94:CB:E7 server=dhcp1
+add address=192.168.0.84 client-id=1:0:c:29:33:fe:e8 mac-address=00:0C:29:33:FE:E8 server=dhcp1
+add address=192.168.0.62 client-id=ff:9f:6e:85:24:0:2:0:0:ab:11:73:88:14:23:cf:48:b7:79 comment=Zabbix-PROXY mac-address=00:0C:29:CD:E1:B3 server=dhcp1
+/ip dhcp-server network
+add address=192.168.0.0/24 dns-server=192.168.0.10,8.8.8.8 gateway=192.168.0.10 netmask=24
+add address=192.168.98.0/24 dns-server=8.8.8.8,192.168.98.1 gateway=192.168.98.1
+add address=192.168.100.0/24 dns-server=8.8.8.8,192.168.0.1 gateway=192.168.100.1
+/ip dns
+set servers=8.8.8.8,77.88.8.8
+/ip dns static
+add address=192.168.0.3 name=server
+add address=192.168.0.124 name=srv.allvia.libercode.ru
+/ip firewall address-list
+add address=192.168.0.11-192.168.0.32 list=Internet-Close-VPN
+add address=192.168.0.13 list=Wite_List_Inet_Accept
+add address=192.168.0.14 list=Wite_List_Inet_Accept
+add address=192.168.0.15 list=Wite_List_Inet_Accept
+add address=192.168.0.16 list=Wite_List_Inet_Accept
+add address=192.168.0.17 list=Wite_List_Inet_Accept
+add address=192.168.0.18 list=Wite_List_Inet_Accept
+add address=192.168.0.19 list=Wite_List_Inet_Accept
+add address=192.168.0.20 list=Wite_List_Inet_Accept
+add address=192.168.0.3 list=Wite_List_Inet_Accept
+add address=192.168.0.135 list=Wite_List_Inet_Accept
+add address=192.168.0.65 list=Wite_List_Inet_Accept
+add address=192.168.0.93 list=Wite_List_Inet_Accept
+add address=192.168.0.80 list=Wite_List_Inet_Accept
+add address=192.168.0.52 list=Wite_List_Inet_Accept
+add address=192.168.0.129 list=Wite_List_Inet_Accept
+add address=192.168.0.105 list=Wite_List_Inet_Accept
+add address=192.168.0.124 list=Wite_List_Inet_Accept
+add address=192.168.0.136 list=Wite_List_Inet_Accept
+add address=192.168.0.137 list=Wite_List_Inet_Accept
+add address=192.168.0.127 list=Wite_List_Inet_Accept
+add address=192.168.0.112 list=Wite_List_Inet_Accept
+add address=192.168.0.107 list=Wite_List_Inet_Accept
+add address=192.168.0.70 list=Wite_List_Inet_Accept
+add address=192.168.0.95 list=Wite_List_Inet_Accept
+add address=192.168.0.91 list=Wite_List_Inet_Accept
+add address=192.168.0.138 list=Wite_List_Inet_Accept
+add address=192.168.0.54 list=Wite_List_Inet_Accept
+add address=192.168.0.156 list=Wite_List_Inet_Accept
+add address=192.168.100.94 list=Wite_List_Inet_Accept
+add address=192.168.0.99 list=Wite_List_Inet_Accept
+add address=192.168.0.82 list=Wite_List_Inet_Accept
+add address=192.168.0.62 list=Wite_List_Inet_Accept
+add address=192.168.0.33 list=Wite_List_Inet_Accept
+add address=192.168.0.10 list=Wite_List_Inet_Accept
+add address=192.168.0.16 list=Internet-Close-VPN
+add address=192.168.0.51 list=Wite_List_Inet_Accept
+add address=10.10.5.0/24 list=Wite_List_Inet_Accept
+add address=192.168.0.173 list=Wite_List_Inet_Accept
+add address=192.168.0.100 list=Wite_List_Inet_Accept
+add address=192.168.0.96 list=Wite_List_Inet_Accept
+add address=192.168.0.79 list=Wite_List_Inet_Accept
+add address=192.168.0.55 list=Internet-Close-VPN
+add address=192.168.0.59 list=Internet-Close-VPN
+add address=192.168.0.83 list=Internet-Close-VPN
+add address=10.10.5.60 comment="VPN roman" list=Allow_CAMS
+add address=10.10.5.66 comment="VPN smarty" list=Allow_CAMS
+add address=10.10.5.40 comment="VPN2 Alexey" list=Allow_CAMS
+add address=10.10.5.7 comment="VPN Alexey" list=Allow_CAMS
+add address=192.168.0.82 comment="LAN Alexey" list=Allow_CAMS
+add address=192.168.0.81 list=Wite_List_Inet_Accept
+add address=192.168.0.81 list=Allow_CAMS
+add address=192.168.0.69 list=Wite_List_Inet_Accept
+add address=192.168.0.89 list=Internet-Close-VPN
+add address=192.168.0.77 list=Wite_List_Inet_Accept
+add address=10.10.5.66 list=Wite_List_Inet_Accept
+add address=192.168.0.250 list=Wite_List_Inet_Accept
+add address=192.168.0.9 list=Wite_List_Inet_Accept
+add address=192.168.0.6 list=Wite_List_Inet_Accept
+add address=192.168.0.200 list=Wite_List_Inet_Accept
+add address=192.168.0.116 list=Wite_List_Inet_Accept
+add address=192.168.0.50 list=Internet-Close-VPN
+add address=10.10.5.28 list=Wite_List_Inet_Accept
+add address="192.\FC\F1\F2\F1\E8\F1\F2\FC\E1" list=Wite_List_Inet_Accept
+add address=192.168.0.123 list=Wite_List_Inet_Accept
+add address=10.10.5.59 list=Wite_List_Inet_Accept
+add address=10.10.5.91 list=Wite_List_Inet_Accept
+add address=192.168.0.229-192.168.0.244 list=Internet-Close-VPN
+add address=192.168.0.86 list=Allow_CAMS
+add address=192.168.0.71 list=Allow_CAMS
+add address=192.168.0.94 list=Allow_CAMS
+add address=192.168.100.245 list=Allow_CAMS
+add address=192.168.0.62 list=Allow_CAMS
+add address=192.168.0.103 list=Allow_CAMS
+add address=192.168.0.244 list=Internet-Close-VPN
+add address=192.168.0.243 list=Internet-Close-VPN
+add address=192.168.0.245 list=Internet-Close-VPN
+add address=10.10.5.30 list=Wite_List_Inet_Accept
+add address=192.168.0.109 list=Wite_List_Inet_Accept
+add address=192.168.0.230-192.168.0.253 list=Internet-Close-VPN
+add address=192.168.0.165 list=Wite_List_Inet_Accept
+add address=64.226.85.28 list=Wite_List_Inet_Accept
+add address=192.168.0.88 list=Wite_List_Inet_Accept
+add address=192.168.0.56 list=Wite_List_Inet_Accept
+add address=192.168.0.114 list=Wite_List_Inet_Accept
+add address=192.168.0.245 list=Wite_List_Inet_Accept
+add address=10.0.0.0/8 list=LOCAL
+add address=192.168.0.0/16 list=LOCAL
+add address=172.16.0.0/12 list=LOCAL
+/ip firewall filter
+add action=accept chain=input comment="[+] established, related" connection-state=established,related
+add action=accept chain=input src-address=10.199.0.0/24
+add action=accept chain=input comment="[+] icmp" protocol=icmp
+add action=accept chain=input comment="[+] IPsec" protocol=ipsec-esp
+add action=accept chain=input comment="[+] UDP PORTS 1701,500,4500" port=1701,500,4500 protocol=udp
+add action=accept chain=input comment="[+] OVPN" dst-port=1194 protocol=tcp
+add action=accept chain=input comment="[+] winbox" dst-port=28291 protocol=tcp
+add action=accept chain=input comment="[+] vpn self ip " dst-address=10.10.5.1
+add action=drop chain=input dst-port=53 in-interface=BR-1015_Igrushki protocol=udp
+add action=drop chain=input dst-port=53 in-interface=BR-1015_Igrushki protocol=tcp
+add action=accept chain=forward comment="[+] established, related" connection-state=established,related
+add action=accept chain=forward comment="[+] to INET (megafon)" out-interface=BR-400_Megafon
+add action=accept chain=forward dst-address=10.10.5.100 port=28291 protocol=tcp src-address=192.168.0.0/24
+add action=accept chain=forward dst-address=192.168.0.0/24 src-address=10.10.5.0/24
+add action=accept chain=forward dst-address=10.10.5.0/24 src-address=192.168.0.0/24
+add action=accept chain=forward src-address=192.168.100.0/24
+add action=accept chain=forward dst-address=192.168.0.0/24 src-address=192.168.100.0/24
+add action=accept chain=forward src-address=192.168.30.0/24
+add action=accept chain=forward dst-address=192.168.30.0/24 src-address=192.168.0.0/24
+add action=accept chain=forward comment="[zabbix agent check]" dst-address=10.199.0.10 protocol=icmp
+add action=accept chain=forward dst-address=83.136.240.206 src-address-list=Internet-Close-VPN
+add action=accept chain=forward dst-address=31.173.167.163 src-address-list=Internet-Close-VPN
+add action=drop chain=forward connection-state=!established,related dst-address=!83.136.240.206 src-address-list=Internet-Close-VPN
+add action=drop chain=forward connection-state=!established,related out-interface=BR-3015_CAMS src-address-list=!Allow_CAMS
+add action=drop chain=forward connection-state=established,related dst-address-list=!Wite_List_Inet_Accept in-interface=BR-2015_LocalNet out-interface=BR-1015_Igrushki src-address-list=!Wite_List_Inet_Accept
+add action=drop chain=forward connection-state=established,related out-interface=BR-1015_Igrushki src-address-list=!Wite_List_Inet_Accept
+add action=drop chain=output disabled=yes dst-address=!1.0.0.1 out-interface=BR-300_Telros
+add action=drop chain=output disabled=yes dst-address=!157.245.20.33 out-interface=BR-300_Telros
+add action=accept chain=input comment="[+] OVPN UDP ON MIKROTIK DONT WORKING" disabled=yes dst-port=1194 protocol=udp
+add action=passthrough chain=---------------- comment="------- OLD --------" disabled=yes
+add action=accept chain=forward disabled=yes protocol=icmp
+add action=accept chain=input disabled=yes
+add action=accept chain=forward disabled=yes dst-port=1194 in-interface=BR-1015_Igrushki port="" protocol=tcp
+add action=accept chain=forward disabled=yes src-address=10.10.5.59
+add action=accept chain=forward disabled=yes dst-port=55777 protocol=udp src-address=213.79.65.82
+/ip firewall mangle
+add action=mark-connection chain=prerouting comment=megafon connection-mark=no-mark connection-state=!established,related disabled=yes in-interface=BR-400_Megafon new-connection-mark=from-megafon passthrough=yes
+add action=mark-routing chain=prerouting comment=megafon connection-mark=from-megafon disabled=yes dst-address-list=!LOCAL new-routing-mark=to-megafon passthrough=no
+add action=mark-connection chain=prerouting connection-mark=no-mark connection-state=!established,related disabled=yes in-interface=BR-300_Telros new-connection-mark=from-telros passthrough=yes
+add action=mark-routing chain=prerouting connection-mark=from-telros disabled=yes dst-address-list=!LOCAL in-interface=BR-300_Telros new-routing-mark=to-telros passthrough=no
+add action=mark-connection chain=output disabled=yes dst-address=157.245.20.33 new-connection-mark=from-telros passthrough=no
+add action=mark-routing chain=output disabled=yes dst-address=157.245.20.33 new-routing-mark=to-telros passthrough=yes
+add action=mark-connection chain=prerouting comment=old-gate connection-mark=no-mark disabled=yes in-interface=BR-1015_Igrushki new-connection-mark=from-old-gw passthrough=yes
+add action=mark-routing chain=prerouting comment=old-gate connection-mark=from-old-gw disabled=yes new-routing-mark=to-old-gw passthrough=yes
+/ip firewall nat
+add action=masquerade chain=srcnat comment="[zabbix agent check]" dst-address=10.199.0.10 protocol=icmp src-address=192.168.0.0/24
+add action=masquerade chain=srcnat out-interface=BR-1015_Igrushki
+add action=masquerade chain=srcnat out-interface=BR-400_Megafon
+add action=masquerade chain=srcnat disabled=yes out-interface=BR-300_Telros
+add action=masquerade chain=srcnat disabled=yes out-interface=*F00635
+add action=dst-nat chain=dstnat dst-address=10.70.0.15 dst-port=10051 protocol=tcp to-addresses=192.168.0.62 to-ports=10051
+add action=dst-nat chain=dstnat comment="\CF\F0\EE\E1\F0\EE\F1 \EF\EE\F0\F2\EE\E2 \F1 \E1\E5\EB\EE\E3\EE IP" disabled=yes dst-address=10.70.0.15 dst-port=1380 protocol=tcp to-addresses=192.168.0.3 to-ports=3389
+add action=dst-nat chain=dstnat comment="\CF\F0\EE\E1\F0\EE\F1 \EF\EE\F0\F2\EE\E2 \F1 \E1\E5\EB\EE\E3\EE IP" dst-address=10.70.0.15 dst-port=80 protocol=tcp to-addresses=192.168.1.124 to-ports=80
+add action=dst-nat chain=dstnat comment="\CF\F0\EE\E1\F0\EE\F1 \EF\EE\F0\F2\EE\E2 \F1 \E1\E5\EB\EE\E3\EE IP" disabled=yes dst-address=178.176.156.181 dst-port=80 protocol=tcp to-addresses=192.168.1.124 to-ports=80
+add action=dst-nat chain=dstnat comment="\CF\F0\EE\E1\F0\EE\F1 \EF\EE\F0\F2\EE\E2 \F1 \E1\E5\EB\EE\E3\EE IP" disabled=yes dst-address=10.70.0.15 dst-port=13822 protocol=tcp to-addresses=192.168.0.124 to-ports=22
+add action=dst-nat chain=dstnat comment="\CF\F0\EE\E1\F0\EE\F1 \EF\EE\F0\F2\EE\E2 \F1 \E1\E5\EB\EE\E3\EE IP" disabled=yes dst-address=10.70.0.15 dst-port=13821 protocol=tcp to-addresses=192.168.0.124 to-ports=21
+add action=dst-nat chain=dstnat dst-address=10.10.5.1 dst-port=33891 protocol=tcp to-addresses=192.168.0.77 to-ports=3389
+add action=dst-nat chain=dstnat comment="\CF\F0\EE\E1\F0\EE\F1 \EF\EE\F0\F2\EE\E2 \F1 \E1\E5\EB\EE\E3\EE IP" disabled=yes dst-address=10.70.0.15 dst-port=13821 protocol=tcp to-addresses=192.168.0.124 to-ports=21
+add action=dst-nat chain=dstnat dst-address=10.70.0.15 dst-port=1368 protocol=tcp to-addresses=192.168.0.100 to-ports=3389
+add action=dst-nat chain=dstnat dst-address=10.70.0.15 dst-port=38291 protocol=tcp to-addresses=192.168.0.90 to-ports=8291
+add action=dst-nat chain=dstnat dst-address=10.10.5.1 dst-port=33898 protocol=tcp to-addresses=192.168.0.3 to-ports=3389
+add action=dst-nat chain=dstnat comment=TRATATATATTRAsir dst-address=10.10.5.200 dst-port=3080 protocol=tcp to-addresses=192.168.98.5 to-ports=3080
+add action=dst-nat chain=dstnat comment=TRATRATRATATATTRASIR dst-address=10.10.5.200 dst-port=3081 protocol=tcp to-addresses=192.168.98.5 to-ports=3081
+add action=dst-nat chain=dstnat disabled=yes dst-address=10.70.0.15 src-address=10.10.3.34 to-addresses=192.168.0.62
+add action=masquerade chain=srcnat disabled=yes dst-address=192.168.1.0/24
+add action=masquerade chain=srcnat disabled=yes dst-address=192.168.0.0/24 src-address=!192.168.0.0/24
+add action=dst-nat chain=dstnat disabled=yes dst-address=178.176.156.181 dst-port=38291 protocol=tcp to-addresses=192.168.0.90 to-ports=8291
+add action=dst-nat chain=dstnat disabled=yes dst-address=178.176.156.181 dst-port=1368 protocol=tcp to-addresses=192.168.0.100 to-ports=3389
+/ip route
+add comment="to megafon RM" distance=1 gateway=178.176.156.161 routing-mark=to-megafon
+add disabled=yes distance=1 gateway=83.136.240.201 routing-mark=to-telros
+add disabled=yes distance=1 gateway=10.70.0.1 pref-src=83.136.240.204 routing-mark=to-old-gw
+add check-gateway=ping comment="to megafon" distance=1 gateway=178.176.156.161
+add distance=1 dst-address=10.0.0.0/8 gateway=10.70.0.1
+add distance=1 dst-address=10.199.0.0/24 gateway=L2TP_DO scope=50 target-scope=30
+add check-gateway=ping disabled=yes distance=1 dst-address=157.245.20.33/32 gateway=83.136.240.201
+add distance=1 dst-address=192.168.0.0/16 gateway=10.70.0.1
+add disabled=yes distance=1 dst-address=192.168.1.0/24 gateway=192.168.0.84
+add distance=1 dst-address=192.168.3.0/24 gateway=10.10.5.100
+add check-gateway=ping distance=1 dst-address=192.168.30.0/24 gateway=10.10.5.200
+/ip service
+set telnet disabled=yes
+set ftp disabled=yes
+set www disabled=yes
+set ssh address=10.10.3.42/32 port=12128
+set api disabled=yes
+set winbox port=28291
+set api-ssl disabled=yes
+/ppp secret
+add local-address=10.10.5.1 name=Smarty password=Ddx36a14 profile=l2tp_Profile remote-address=10.10.5.66
+add local-address=10.10.5.1 name=zueva password="&*(zxcF" profile=l2tp_Profile remote-address=10.10.5.6
+add local-address=10.10.5.1 name=KlinskiiA password="@#\$jklA" profile=l2tp_Profile remote-address=10.10.5.7
+add local-address=10.10.5.1 name=Makarova password="rtyMAK\$" profile=l2tp_Profile remote-address=10.10.5.9 service=ovpn
+add local-address=10.10.5.1 name=Sergienko password=BNM842@ profile=l2tp_Profile remote-address=10.10.5.10
+add local-address=10.10.5.1 name=Admin1c password=FgH8!@# profile=l2tp_Profile remote-address=10.10.5.11
+add local-address=10.10.5.1 name=Sergeeva password="cVb)(*" profile=l2tp_Profile remote-address=10.10.5.12
+add local-address=10.10.5.1 name=Mesher password="Yui@3\$" profile=l2tp_Profile remote-address=10.10.5.13
+add local-address=10.10.5.1 name=Kudyrskaya password=MnB%^&2 profile=l2tp_Profile remote-address=10.10.5.14
+add local-address=10.10.5.1 name=Polikaeva password=wEr#4% profile=l2tp_Profile remote-address=10.10.5.15
+add disabled=yes local-address=10.10.5.1 name=Globa password=TyU^7* profile=l2tp_Profile remote-address=10.10.5.16
+add disabled=yes local-address=10.10.5.1 name=Smirnova password="HjK\$5^" profile=l2tp_Profile remote-address=10.10.5.17
+add local-address=10.10.5.1 name=Zagiy password="FgH^5\$" profile=l2tp_Profile remote-address=10.10.5.19
+add disabled=yes local-address=10.10.5.1 name=Nekrasova password=RTy7@8 profile=l2tp_Profile remote-address=10.10.5.20
+add local-address=10.10.5.1 name=EzhovA password=EzhovA!2# profile=l2tp_Profile remote-address=10.10.5.21
+add local-address=10.10.5.1 name=Shevcova password="SheVVV\$\$\$" profile=l2tp_Profile remote-address=10.10.5.22
+add local-address=10.10.5.1 name=Nikulicheva password="LKJ^%\$" profile=l2tp_Profile remote-address=10.10.5.23
+add local-address=10.10.5.1 name=Turuspaev password="K7}n3Jm" profile=l2tp_Profile remote-address=10.10.5.25
+add local-address=10.10.5.1 name=Tubasheva password=272pB#4 profile=l2tp_Profile remote-address=10.10.5.26
+add local-address=10.10.5.1 name=Shytkin password=cWqQBw0 profile=l2tp_Profile remote-address=10.10.5.27
+add local-address=10.10.5.1 name=Sokolik password="vqzh\?u5" profile=l2tp_Profile remote-address=10.10.5.28
+add local-address=10.10.5.1 name=Poslanchik password=Rox6yFs profile=l2tp_Profile remote-address=10.10.5.30
+add disabled=yes local-address=10.10.5.1 name=Kuvardina password="Tyu\$%^" profile=l2tp_Profile remote-address=10.10.5.31
+add local-address=10.10.5.1 name=iEzhov password="123Ert)" profile=l2tp_Profile remote-address=10.10.5.32
+add disabled=yes local-address=10.10.5.1 name=Limonova password=TYU%^& profile=l2tp_Profile remote-address=10.10.5.33
+add local-address=10.10.5.1 name=Kvasnikov password=Ghj^78 profile=l2tp_Profile remote-address=10.10.5.34
+add local-address=10.10.5.1 name=Babyr password="Asd\$5^" profile=l2tp_Profile remote-address=10.10.5.35
+add disabled=yes local-address=10.10.5.1 name=Laricheva password="FrgGdr\$" profile=l2tp_Profile remote-address=10.10.5.36
+add local-address=10.10.5.1 name=Imaev password="QwE3\$5" profile=l2tp_Profile remote-address=10.10.5.37
+add local-address=10.10.5.1 name=Semenova password=SemFEdf# profile=l2tp_Profile remote-address=10.10.5.38
+add disabled=yes local-address=10.10.5.1 name=Zagiya password="Zag%\$#Q" profile=l2tp_Profile remote-address=10.10.5.39
+add local-address=10.10.5.1 name=KlinskiiAA password=Ty2@! profile=l2tp_Profile remote-address=10.10.5.40
+add local-address=10.10.5.1 name=Kireev password=TxZ2Ub profile=l2tp_Profile remote-address=10.10.5.41
+add local-address=10.10.5.1 name=Pilchenko password="PilPil#\$!" profile=l2tp_Profile remote-address=10.10.5.42
+add local-address=10.10.5.1 name=Mescheryakova1 password=Rrt!4e1 profile=l2tp_Profile remote-address=10.10.5.43 service=ovpn
+add local-address=10.10.5.1 name=Sokolov password="SSolv\$\$!" profile=l2tp_Profile remote-address=10.10.5.48
+add disabled=yes local-address=10.10.5.1 name=Miroshnik password=PolinaOLV! profile=l2tp_Profile remote-address=10.10.5.46
+add local-address=10.10.5.1 name=MakarovaNote password="rtyMAK\$" profile=l2tp_Profile remote-address=10.10.5.44 service=ovpn
+add local-address=10.10.5.1 name=Aleksandrova password=ScdKA!@# profile=l2tp_Profile remote-address=10.10.5.45
+add local-address=10.10.5.1 name=Zaharova password="CsdZah!\$" profile=l2tp_Profile remote-address=10.10.5.47
+add local-address=10.10.5.1 name=Ignatenko password=Igna!2# profile=l2tp_Profile remote-address=10.10.5.49
+add local-address=10.10.5.1 name=Mescheryakova2 password=Mesh!@# profile=l2tp_Profile remote-address=10.10.5.50 service=ovpn
+add local-address=10.10.5.1 name=Ignatenko1 password=Ign123321!@# profile=l2tp_Profile remote-address=10.10.5.51
+add local-address=10.10.5.1 name=sklad password=sklad123321!2# profile=l2tp_Profile remote-address=10.10.5.52 service=ovpn
+add local-address=10.10.5.1 name=AKn password=t9qWW6 profile=l2tp_Profile remote-address=10.10.5.53
+add local-address=10.10.5.1 name=LSokol password=B4R273 profile=l2tp_Profile remote-address=10.10.5.67
+add local-address=10.10.5.1 name=Bitrix password=B1tr1xT0ys profile=l2tp_Profile remote-address=10.10.5.55
+add disabled=yes local-address=10.10.5.1 name=DemidovD password=1W2#e profile=l2tp_Profile remote-address=10.10.5.56
+add local-address=10.10.5.1 name=AKn2 password=OLVakn!@# profile=l2tp_Profile remote-address=10.10.5.57
+add disabled=yes local-address=10.10.5.1 name=Makoveckaya password="ElMak#\$%" profile=l2tp_Profile remote-address=10.10.5.58
+add local-address=10.10.5.1 name=evgen password=Scd6vYt1 profile=l2tp_Profile remote-address=10.10.5.59
+add local-address=10.10.5.1 name=roman password=S7yhgkujsadhjf profile=l2tp_Profile remote-address=10.10.5.60
+add local-address=10.10.5.1 name=Batenkova password="Bat!23\$" profile=l2tp_Profile remote-address=10.10.5.61
+add disabled=yes local-address=10.10.5.1 name=Nurieva password="Nur&8(" profile=l2tp_Profile remote-address=10.10.5.68
+add local-address=10.10.5.1 name=Kolchina password="OLV!@#\$" profile=l2tp_Profile remote-address=10.10.5.69
+add disabled=yes local-address=10.10.5.1 name=Soldatova password=ZxC1@3 profile=l2tp_Profile remote-address=10.10.5.70
+add local-address=10.10.5.1 name=Leonid password=Le0#4% profile=l2tp_Profile remote-address=10.10.5.71
+add local-address=10.10.5.1 name=Sinevskaya password=SinEv!@# profile=l2tp_Profile remote-address=10.10.5.72
+add disabled=yes local-address=10.10.5.1 name=Ivacheva password="iva1@3\$" profile=l2tp_Profile remote-address=10.10.5.73
+add disabled=yes local-address=10.10.5.1 name=lohovdmitry password="JKHfg@#\$" profile=l2tp_Profile remote-address=10.10.5.74
+add local-address=10.10.5.1 name=limonova password=Asd!2# profile=l2tp_Profile remote-address=10.10.5.75
+add disabled=yes local-address=10.10.5.1 name=Sanaya password="Zxc#\$5" profile=l2tp_Profile remote-address=10.10.5.76
+add disabled=yes local-address=10.10.5.1 name=Varlamova password=ctTFr9 profile=l2tp_Profile remote-address=10.10.5.77
+add disabled=yes local-address=10.10.5.1 name=Kurichenko password=dfhEDGt!! profile=l2tp_Profile remote-address=10.10.5.78
+add local-address=10.10.5.1 name=Kravcova password=Kra!2# remote-address=10.10.5.79
+add local-address=10.10.5.1 name=Rudeckaya password=Asd!23 remote-address=10.10.5.80
+add local-address=10.10.5.1 name=Yakovleva password=vJuV3H profile=l2tp_Profile remote-address=10.10.5.81
+add local-address=10.10.5.1 name=Ardel password=Fgh%6& profile=l2tp_Profile remote-address=10.10.5.89
+add local-address=10.10.5.1 name=Azovcev password=SdxfgAzAz3!#@ profile=l2tp_Profile remote-address=10.10.5.90
+add disabled=yes local-address=10.10.5.1 name=Snytkin password=cWqQBw1 profile=l2tp_Profile remote-address=10.10.5.91
+add local-address=10.10.5.1 name=notebook password="NoteB123!#\$df" profile=l2tp_Profile remote-address=10.10.5.92
+add local-address=10.10.5.1 name=Malashickaya password=Jyh64fR profile=l2tp_Profile remote-address=10.10.5.93
+add local-address=10.10.5.1 name=Bodrova password=YOOVSb profile=l2tp_Profile remote-address=10.10.5.94
+add local-address=10.10.5.1 name=BitrixSupport password=BitSup45** remote-address=10.10.5.96
+add local-address=10.10.5.1 name=Bugry password=9TVea4 profile=l2tp_Profile remote-address=10.10.5.97
+add local-address=10.10.5.1 name=Nazirova password=mzbPeH profile=l2tp_Profile remote-address=10.10.5.98
+add local-address=10.10.5.1 name=Andronov password=uT7d9x profile=l2tp_Profile remote-address=10.10.5.99
+add local-address=10.10.5.1 name=BMikrotik password=9TVea4qwrvcvb profile=l2tp_Profile remote-address=10.10.5.100
+add local-address=10.10.5.1 name=YanStreh password=^Y7u*p1 profile=l2tp_Profile remote-address=10.10.5.62
+add local-address=10.10.5.1 name=rab1 password=HgbbNr profile=l2tp_Profile remote-address=10.10.5.101
+add local-address=10.10.5.1 name=Semenova2 password=FoXVCL profile=l2tp_Profile remote-address=10.10.5.102
+add local-address=10.10.5.1 name=Mescheryakova3 password=ObLa3A profile=l2tp_Profile remote-address=10.10.5.103
+add local-address=10.10.5.1 name=Pilchenko2 password=k7bAZJ profile=l2tp_Profile remote-address=10.10.5.104
+add local-address=10.10.5.1 name=Limonova2 password=hHuk7A profile=l2tp_Profile remote-address=10.10.5.105
+add local-address=10.10.5.1 name=Sergeeva2 password=jW04CF profile=l2tp_Profile remote-address=10.10.5.106
+add local-address=10.10.5.1 name=Nikulicheva2 password=rg60F5 profile=l2tp_Profile remote-address=10.10.5.107
+add local-address=10.10.5.1 name=Tubasheva2 password=pZbLkD profile=l2tp_Profile remote-address=10.10.5.108
+add local-address=10.10.5.1 name=Yakovleva2 password=N5WwZH profile=l2tp_Profile remote-address=10.10.5.109
+add local-address=10.10.5.1 name=Sokolik2 password=CoGT32 profile=l2tp_Profile remote-address=10.10.5.110
+add local-address=10.10.5.1 name=Zayceva password=tKyZb9 remote-address=10.10.5.111
+add local-address=10.10.5.1 name=Zemcov password=pG4M42 remote-address=10.10.5.112
+add local-address=10.99.0.1 name=ppp_test password=189heu9hwq1 remote-address=10.99.0.2
+add local-address=10.10.5.1 name=CMikrotik password=fjU3Md^7dj%fSA profile=l2tp_Profile remote-address=10.10.5.200 service=l2tp
+add local-address=10.10.5.1 name=Snytkin2 password=dJpnwN remote-address=10.10.5.113
+add disabled=yes local-address=10.10.5.1 name=eduard password=Kfdij*3@kj%uf profile=l2tp_Profile remote-address=10.10.5.114
+add local-address=10.10.5.1 name=eduard2 password=Kfdij*3@kj%uf profile=l2tp_Profile remote-address=10.10.5.115
+add local-address=10.10.5.1 name=Zayceva2 password="Dkdf(*32KL3" profile=l2tp_Profile remote-address=10.10.5.114
+add local-address=10.10.5.1 name=DanilovaA password=Ivdf*nvD38CV%s remote-address=10.10.5.116 service=l2tp
+/snmp
+set contact=helptech@smartics.ru enabled=yes engine-id=744D28B5CC8B location=Igrushki trap-generators=interfaces trap-interfaces=all trap-target=192.168.0.62,10.10.3.34 trap-version=3
+/system clock
+set time-zone-name=Europe/Moscow
+/system identity
+set name=Igrushki
+/system leds
+add leds="wlan2_signal1-led,wlan2_signal2-led,wlan2_signal3-led,wlan2_signal4-led,wlan2_signal5-led" type=wireless-signal-strength
+add leds=wlan2_tx-led type=interface-transmit
+add leds=wlan2_rx-led type=interface-receive
+/system logging
+add action=zabbix topics=system
+add action=zabbix topics=script
+/system scheduler
+add interval=20m name=VPN-disconnect on-event="/system script run Snytkin-vpn-info;" policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon start-date=mar/30/2023 start-time=12:30:00
+/system script
+add dont-require-permissions=no name=script1 owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="/interface wireless cap\r\n# \r\nset caps-man-addresses=192.168.0.1 enabled=yes interfaces=wlan_2.4,wlan_5Ghz"
+add dont-require-permissions=no name=L2tpDisconnected owner=eduard policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local DeviceName [/system identity get name];\r\n:local Time [/system clock get time];\r\n:local Date [/system clock get date];\r\n:local TelegramMessageText;\r\n:local TGtoken bot326215219:AAEBBG6NGikAj7MHNFnAXvqfVqT6Shc8inE/;\r\n:local ChatIDTG -1001480396546;\r\n\r\n:global L2tpDisconnect;\r\n\r\n:local IDsEvents [/log find where topics~\"l2tp\" message~\".l2tp.*disconnected\"];\r\n:local LenArrayIDs [:len \$IDsEvents];\r\n:local StartArrayID [:find \$IDsEvents \$L2tpDisconnect];\r\n:local EndArrayID (\$IDsEvents -> (\$LenArrayIDs-1));\r\n\r\n:log info \"Script ParseLogLoginFailure: running.\";\r\n\r\n:if (\$EndArrayID != \$L2tpDisconnect and [:tobool \$L2tpDisconnect] ) do={\r\n\r\n    :log info \"Script ParseLogLoginFailure: new events found.\";\r\n\r\n    :for KeyArray from=(\$StartArrayID+1) to=(\$LenArrayIDs-1) do={\r\n        :local IDMessage (\$IDsEvents ->\$KeyArray );\r\n        :set TelegramMessageText \"\$TelegramMessageText %0D%0A  \$[/log\_get number=\$IDMessage time] - \$[/log get number=\$IDMessage message];\";\r\n        }\r\n\r\n    :set L2tpDisconnect \$EndArrayID;\r\n\r\n    :log info \"Script ParseLogLoginFailure: events processed. Sending notifications.\";\r\n\r\n    # START SEND TELEGRAM\r\n    :local MessageText \"\\E2\\9B\\94 \$DeviceName: L2TP Shutdown \$TelegramMessageText\";\r\n    /tool fetch url=\"https://api.telegram.org/\$TGtoken/sendMessage\\\?chat_id=\$ChatIDTG&text=\$MessageText\" keep-result=no;\r\n    # END SEND TELEGRAM\r\n\r\n} else={\r\n  :log info \"Script ParseLogLoginFailure: no new messages found.\";\r\n};\r\n\r\n#:log info \"Script ParseLogLoginFailure: script completed successfully.\";\r\n:set L2tpDisconnect \$EndArrayID;"
+add dont-require-permissions=no name=OvpnDisconnected owner=eduard policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local DeviceName [/system identity get name];\r\n:local Time [/system clock get time];\r\n:local Date [/system clock get date];\r\n:local TelegramMessageText;\r\n:local TGtoken bot326215219:AAEBBG6NGikAj7MHNFnAXvqfVqT6Shc8inE/;\r\n:local ChatIDTG -1001480396546;\r\n\r\n:global OvpnDisconnect;\r\n\r\n:local IDsEvents [/log find where topics~\"ovpn\" message~\".ovpn.*disconnected\"];\r\n:local LenArrayIDs [:len \$IDsEvents];\r\n:local StartArrayID [:find \$IDsEvents \$OvpnDisconnect];\r\n:local EndArrayID (\$IDsEvents -> (\$LenArrayIDs-1));\r\n\r\n:log info \"Script ParseLogLoginFailure: running.\";\r\n\r\n:if (\$EndArrayID != \$OvpnDisconnect and [:tobool \$OvpnDisconnect] ) do={\r\n\r\n    :log info \"Script ParseLogLoginFailure: new events found.\";\r\n\r\n    :for KeyArray from=(\$StartArrayID+1) to=(\$LenArrayIDs-1) do={\r\n        :local IDMessage (\$IDsEvents ->\$KeyArray );Snytkin\r\n        :set TelegramMessageText \"\$TelegramMessageText %0D%0A  \$[/log\_get number=\$IDMessage time] - \$[/log get number=\$IDMessage message];\";\r\n        }\r\n\r\n    :set OvpnDisconnect \$EndArrayID;\r\n\r\n    :log info \"Script ParseLogLoginFailure: events processed. Sending notifications.\";\r\n\r\n    # START SEND TELEGRAM\r\n    :local MessageText \"\\E2\\9B\\94 \$DeviceName: OVPN Shutdown \$TelegramMessageText\";\r\n    /tool fetch url=\"https://api.telegram.org/\$TGtoken/sendMessage\\\?chat_id=\$ChatIDTG&text=\$MessageText\" keep-result=no;\r\n    # END SEND TELEGRAM\r\n\r\n} else={\r\n  :log info \"Script ParseLogLoginFailure: no new messages found.\";\r\n};\r\n\r\n#:log info \"Script ParseLogLoginFailure: script completed successfully.\";\r\n:set OvpnDisconnect \$EndArrayID;"
+add dont-require-permissions=no name=Snytkin-vpn-info owner=eduard policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local DeviceName [/system identity get name];\r\n:local Time [/system clock get time];\r\n:local Date [/system clock get date];\r\n\r\n:local TelegramMessageText;\r\n:local TGtoken bot326215219:AAEBBG6NGikAj7MHNFnAXvqfVqT6Shc8inE/;\r\n:local ChatIDTG -1001480396546;\r\n\r\n:local User Snytkin;\r\n\r\n:global LogLableVPN1;\r\n\r\n:local IDsEvents [/log find where topics~\"error\" message~\".*\$User.*authentication failed\"];\r\n\r\n:local LenArrayIDs [:len \$IDsEvents];\r\n:local StartArrayID [:find \$IDsEvents \$LogLableVPN1];\r\n:local EndArrayID (\$IDsEvents -> (\$LenArrayIDs-1));\r\n\r\n:log info \"Script ParseLogLoginFailure: running.\";  \r\n\r\n:if (\$EndArrayID != \$LogLableVPN1 and [:tobool \$LogLableVPN1] ) do={\r\n\r\n    :log info \"Script ParseLogLoginFailure: new events found.\";\r\n\r\n    :for KeyArray from=(\$StartArrayID+1) to=(\$LenArrayIDs-1) do={\r\n        :local IDMessage (\$IDsEvents ->\$KeyArray );\r\n        :set TelegramMessageText \"\$TelegramMessageText %0D%0A  \$[/log\_get number=\$IDMessage time] - \$[/log get number=\$IDMessage message];\";\r\n        }\r\n\r\n    :set LogLableVPN1 \$EndArrayID;\r\n\r\n    :log info \"Script ParseLogLoginFailure: events processed. Sending notifications.\";\r\n\r\n    # START SEND TELEGRAM\r\n    :local MessageText \"\\E2\\9B\\94 \$DeviceName: VPN ERROR by \$User \$TelegramMessageText\";\r\n    /tool fetch url=\"https://api.telegram.org/\$TGtoken/sendMessage\\\?chat_id=\$ChatIDTG&text=\$MessageText\" keep-result=no;\r\n    # END SEND TELEGRAM\r\n\r\n} else={\r\n  :log info \"Script ParseLogLoginFailure: no new messages found.\";\r\n};\r\n\r\n#:log info \"Script ParseLogLoginFailure: script completed successfully.\";\r\n:set LogLableVPN1 \$EndArrayID;"
+add dont-require-permissions=no name="Ping 77.88.8.8" owner=eduard policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="{\r\n:local pinglimit 4;\r\n:local ttllimit 160;\r\n:local sent [/ping address=77.88.8.8 count=\$pinglimit ttl=\$ttllimit]\r\n:local pingloss (100 - 100 / \$pinglimit*\$sent)\r\n:log info message=\"Pings send to 77.88.8.8:\$sent lost:\$pingloss %\"\r\n}"
+add dont-require-permissions=no name=tst owner=eduard policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="local a \"ping 192.168.1.25 count 4\";\r\nexecute script=\$a file=1.txt"
+/tool netwatch
+add host=77.88.8.8 interval=2s timeout=5s
+add host=8.8.8.8 interval=2s timeout=5s
+/tool sniffer
+set file-limit=8000KiB file-name=rar.pcap filter-interface=all memory-limit=1500KiB only-headers=yes
+/tool traffic-generator packet-template
+add mac-protocol=arp name=tst-arp
+/tool traffic-generator stream
+add name=tst-arp-stream packet-size=200 tx-template=tst-arp
