@@ -1,0 +1,96 @@
+#              model: RouterBOARD 952Ui-5ac2nD
+#      serial-number: 8B0808D6B9C8
+#      firmware-type: qca9531L
+#   current-firmware: 6.47.3
+#   installed-version: 6.47.3
+# Flags: U - undoable, R - redoable, F - floating-undo 
+#   ACTION                                   BY               POLICY             
+# F user oXi_backup_usr added                admin            write              
+#                                                             policy             
+# F user oxidized changed                    admin            write              
+#                                                             policy             
+# F ip service changed                       admin            write              
+# F ip service changed                       admin            write              
+# F ip service changed                       admin            write              
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# U changed snmp settings                    admin            write              
+# U item changed                             admin            write              
+# U device removed                           admin            write              
+# U changed snmp settings                    admin            write              
+# U changed snmp settings                    admin            write              
+# 
+# software id = 9Z8D-QZ67
+#
+# model = RouterBOARD 952Ui-5ac2nD
+# serial number = 8B0808D6B9C8
+/interface bridge
+add fast-forward=no name=BR-002_MGMT
+add disabled=yes fast-forward=no name=BR-020_Cams
+add fast-forward=no name=BR-838_MKVM
+add fast-forward=no name=BR-899_Pub_WiFi
+/interface ethernet
+set [ find default-name=ether1 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full comment="MT1-B1-Pechi SwOs OR SM1-B18-F5"
+set [ find default-name=ether2 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full
+set [ find default-name=ether3 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full
+set [ find default-name=ether4 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full
+set [ find default-name=ether5 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full
+/interface wireless
+set [ find default-name=wlan1 ] antenna-gain=0 band=2ghz-b/g/n disabled=no frequency=auto mode=ap-bridge ssid="MG 2.4" station-roaming=enabled tx-power=24 tx-power-mode=all-rates-fixed wireless-protocol=802.11
+set [ find default-name=wlan2 ] antenna-gain=0 band=5ghz-a/n/ac channel-width=20/40/80mhz-Ceee disabled=no frequency=auto mode=ap-bridge radio-name="MG 5" ssid="MG 5" station-roaming=enabled wireless-protocol=802.11
+/interface vlan
+add interface=ether1 name=v2_eth1 vlan-id=2
+add disabled=yes interface=ether1 name=v20_eth1 vlan-id=20
+add interface=ether1 name=v838_eth1 vlan-id=838
+add interface=ether1 name=v899_eth1 vlan-id=899
+/interface wireless security-profiles
+set [ find default=yes ] authentication-types=wpa2-psk eap-methods="" mode=dynamic-keys supplicant-identity=MikroTik wpa2-pre-shared-key=MAGN90!k452
+add authentication-types=wpa2-psk eap-methods="" management-protection=allowed mode=dynamic-keys name=MG_Oven supplicant-identity="" wpa2-pre-shared-key=MagnetonOven
+/interface wireless
+add disabled=no keepalive-frames=disabled mac-address=CE:2D:E0:A6:45:50 master-interface=wlan1 multicast-buffering=disabled name=Virtual_Wlan2.4 security-profile=MG_Oven ssid=MAG-OVEN station-roaming=enabled wds-cost-range=0 wds-default-cost=0 wps-mode=disabled
+/ip hotspot profile
+set [ find default=yes ] html-directory=flash/hotspot
+/snmp community
+set [ find default=yes ] addresses=10.10.3.34/32 authentication-password=Vn_FLD7_Bnz encryption-password=P1kfvaL23X name=smartics_pub security=private
+/user group
+set full policy="local,telnet,ssh,ftp,reboot,read,write,policy,test,winbox,password,web,sniff,sensitive,api,romon,dude,tikapp"
+/interface bridge port
+add bridge=BR-899_Pub_WiFi interface=v899_eth1
+add bridge=BR-899_Pub_WiFi interface=wlan2
+add bridge=BR-899_Pub_WiFi interface=wlan1
+add bridge=BR-002_MGMT interface=v2_eth1
+add bridge=BR-020_Cams disabled=yes interface=v20_eth1
+add bridge=BR-020_Cams disabled=yes interface=ether2
+add bridge=BR-020_Cams disabled=yes interface=ether3
+add bridge=BR-838_MKVM interface=v838_eth1
+add bridge=BR-838_MKVM disabled=yes interface=ether4
+add bridge=BR-838_MKVM disabled=yes interface=ether5
+add bridge=BR-838_MKVM interface=Virtual_Wlan2.4
+/ip neighbor discovery-settings
+set discover-interface-list=!dynamic
+/interface bridge vlan
+add bridge=BR-899_Pub_WiFi untagged=Virtual_Wlan2.4 vlan-ids=899
+/ip address
+add address=192.168.4.1/24 interface=Virtual_Wlan2.4 network=192.168.4.0
+/ip dhcp-client
+add disabled=no interface=BR-002_MGMT
+add disabled=no interface=BR-838_MKVM
+/ip firewall nat
+add action=masquerade chain=srcnat out-interface=BR-002_MGMT
+/ip service
+set telnet disabled=yes
+set ftp disabled=yes
+set www disabled=yes
+set ssh address=10.10.3.42/32 port=12128
+set api disabled=yes
+set winbox port=28291
+set api-ssl disabled=yes
+/snmp
+set contact=helptech@smartics.ru enabled=yes engine-id=CC2DE0A6454A location=B1 trap-generators=interfaces trap-interfaces=BR-002_MGMT trap-target=10.10.3.34 trap-version=3
+/system clock
+set time-zone-name=Europe/Moscow
+/system identity
+set name=MT2-B1-Pechi-WiFi
+/system ntp client
+set enabled=yes primary-ntp=85.21.78.91 secondary-ntp=88.147.254.235
