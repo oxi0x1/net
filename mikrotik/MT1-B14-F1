@@ -1,0 +1,76 @@
+#              model: CRS326-24G-2S+
+#      serial-number: DA720D71469D
+#      firmware-type: dx3230L
+#   current-firmware: 6.49.3
+#   installed-version: 6.49.3
+# Flags: U - undoable, R - redoable, F - floating-undo 
+#   ACTION                                   BY               POLICY             
+# U user oXi_backup_usr added                admin            write              
+#                                                             policy             
+# U user oxidized changed                    admin            write              
+#                                                             policy             
+# U ip service changed                       admin            write              
+# U changed snmp settings                    admin            write              
+# U changed snmp settings                    admin            write              
+# U item changed                             admin            write              
+# 
+# software id = IC8N-780V
+#
+# model = CRS326-24G-2S+
+# serial number = DA720D71469D
+/interface bridge
+add name=SWBR-1 vlan-filtering=yes
+/interface vlan
+add interface=SWBR-1 name=v2_SWBR-1 vlan-id=2
+/interface wireless security-profiles
+set [ find default=yes ] supplicant-identity=MikroTik
+/snmp community
+set [ find default=yes ] addresses=10.10.3.34/32 authentication-password=Vn_FLD7_Bnz encryption-password=P1kfvaL23X name=smartics_pub security=private
+/interface bridge port
+add bridge=SWBR-1 interface=ether2 pvid=829
+add bridge=SWBR-1 interface=ether3 pvid=829
+add bridge=SWBR-1 interface=ether4 pvid=829
+add bridge=SWBR-1 interface=ether5 pvid=829
+add bridge=SWBR-1 interface=ether6 pvid=829
+add bridge=SWBR-1 interface=ether7 pvid=20
+add bridge=SWBR-1 interface=ether8 pvid=829
+add bridge=SWBR-1 interface=ether9 pvid=20
+add bridge=SWBR-1 interface=ether10
+add bridge=SWBR-1 interface=ether11
+add bridge=SWBR-1 interface=ether12
+add bridge=SWBR-1 interface=ether13
+add bridge=SWBR-1 interface=ether14
+add bridge=SWBR-1 interface=ether15
+add bridge=SWBR-1 interface=ether16
+add bridge=SWBR-1 interface=ether17
+add bridge=SWBR-1 interface=ether18
+add bridge=SWBR-1 interface=ether19
+add bridge=SWBR-1 interface=ether20
+add bridge=SWBR-1 interface=ether21
+add bridge=SWBR-1 interface=ether22
+add bridge=SWBR-1 interface=ether23
+add bridge=SWBR-1 interface=ether24 pvid=2
+add bridge=SWBR-1 interface=ether1
+/interface bridge vlan
+add bridge=SWBR-1 tagged=ether1 untagged=ether7,ether9 vlan-ids=20
+add bridge=SWBR-1 tagged=ether1 untagged=ether2,ether3,ether4,ether5,ether6,ether8 vlan-ids=829
+add bridge=SWBR-1 tagged=SWBR-1,ether1,ether24 vlan-ids=2
+/ip dhcp-client
+add disabled=no interface=v2_SWBR-1
+/ip service
+set telnet disabled=yes
+set ftp disabled=yes
+set www disabled=yes
+set ssh port=12128
+set api disabled=yes
+set api-ssl disabled=yes
+/snmp
+set contact=helptech@smartics.ru enabled=yes engine-id=08553172FD5A location=B14 trap-generators=interfaces trap-interfaces=SWBR-1 trap-target=10.10.3.34 trap-version=3
+/system clock
+set time-zone-name=Europe/Moscow
+/system identity
+set name=MT1-B14-F1
+/system ntp client
+set enabled=yes primary-ntp=91.206.16.3 secondary-ntp=88.147.254.230
+/system routerboard settings
+set boot-os=router-os
