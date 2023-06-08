@@ -5,16 +5,6 @@
 #   installed-version: 6.49.5
 # Flags: U - undoable, R - redoable, F - floating-undo 
 #   ACTION                                   BY               POLICY             
-# U ip service changed                       admin            write              
-# U user oXi_backup_usr added                admin            write              
-#                                                             policy             
-# U user oxidized changed                    admin            write              
-#                                                             policy             
-# U item changed                             admin            write              
-# U device changed                           admin            write              
-# U changed snmp settings                    admin            write              
-# U item changed                             admin            write              
-# U changed snmp settings                    admin            write              
 # 
 # software id = 957L-Z96L
 #
