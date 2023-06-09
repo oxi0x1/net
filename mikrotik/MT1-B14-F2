@@ -5,6 +5,9 @@
 #   installed-version: 6.47.3
 # Flags: U - undoable, R - redoable, F - floating-undo 
 #   ACTION                                   BY               POLICY             
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item added                               admin            write              
 # U log rule changed                         admin            write              
 # U log rule added                           admin            write              
 # U log action changed                       admin            write              
@@ -95,6 +98,7 @@ set [ find default=yes ] supplicant-identity=MikroTik
 set [ find default=yes ] html-directory=flash/hotspot
 /snmp community
 set [ find default=yes ] addresses=10.10.3.34/32 authentication-password=Vn_FLD7_Bnz encryption-password=P1kfvaL23X name=smartics_pub security=private
+add addresses=0.0.0.0/0 disabled=yes name=11 security=private
 /system logging action
 add name=logsrv remote=10.10.3.42 remote-port=5145 target=remote
 /interface bridge port
