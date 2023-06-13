@@ -39,8 +39,6 @@ set [ find default-name=sfp-sfpplus1 ] auto-negotiation=no
 add comment=MGMT interface=SWBR-1 name=v2-MGMT vlan-id=2
 /interface wireless security-profiles
 set [ find default=yes ] supplicant-identity=MikroTik
-/ip hotspot profile
-set [ find default=yes ] html-directory=hotspot
 /snmp community
 set [ find default=yes ] addresses=10.10.3.34/32 authentication-password=Vn_FLD7_Bnz encryption-password=P1kfvaL23X name=smartics_pub security=private
 /interface bridge port
