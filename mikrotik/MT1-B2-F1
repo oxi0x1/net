@@ -13,17 +13,7 @@
 # U ip service changed                       admin            write              
 # U user oXi_backup_usr added                admin            write              
 #                                                             policy             
-# U bridge port changed                      admin            write              
-# U item changed                             admin            write              
-# U bridge port changed                      admin            write              
-# U bridge port changed                      admin            write              
-# U bridge port changed                      admin            write              
-# U item changed                             admin            write              
-# U item changed                             admin            write              
-# U item changed                             admin            write              
-# U item changed                             admin            write              
-# U item added                               admin            write              
-# U device removed                           admin            write              
+# U changed snmp settings                    admin            write              
 # U item changed                             admin            write              
 # U item changed                             admin            write              
 # U item changed                             admin            write              
@@ -32,10 +22,10 @@
 # U item changed                             admin            write              
 # U item changed                             admin            write              
 # U item changed                             admin            write              
-# U bridge port changed                      admin            write              
-# U bridge port changed                      admin            write              
-# U bridge port changed                      admin            write              
-# U device added                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
+# U item changed                             admin            write              
 # 
 # software id = IWM4-DC1J
 #
@@ -49,6 +39,8 @@ set [ find default-name=sfp-sfpplus1 ] auto-negotiation=no
 add comment=MGMT interface=SWBR-1 name=v2-MGMT vlan-id=2
 /interface wireless security-profiles
 set [ find default=yes ] supplicant-identity=MikroTik
+/ip hotspot profile
+set [ find default=yes ] html-directory=hotspot
 /snmp community
 set [ find default=yes ] addresses=10.10.3.34/32 authentication-password=Vn_FLD7_Bnz encryption-password=P1kfvaL23X name=smartics_pub security=private
 /interface bridge port
@@ -72,32 +64,30 @@ add bridge=SWBR-1 interface=ether17
 add bridge=SWBR-1 interface=ether18
 add bridge=SWBR-1 interface=ether19
 add bridge=SWBR-1 interface=ether20
-add bridge=SWBR-1 interface=ether21 pvid=300
-add bridge=SWBR-1 interface=ether22 pvid=300
-add bridge=SWBR-1 interface=ether23 pvid=300
-add bridge=SWBR-1 interface=ether24
+add bridge=SWBR-1 interface=ether21
+add bridge=SWBR-1 interface=ether22
+add bridge=SWBR-1 interface=ether23
+add bridge=SWBR-1 interface=ether24 pvid=2
 add bridge=SWBR-1 interface=sfp-sfpplus1
 add bridge=SWBR-1 interface=sfp-sfpplus2
 /interface bridge vlan
-add bridge=SWBR-1 comment=MGMT tagged=SWBR-1,sfp-sfpplus1,sfp-sfpplus2 untagged=ether20 vlan-ids=2
-add bridge=SWBR-1 comment=Perco disabled=yes tagged=sfp-sfpplus1,sfp-sfpplus2 untagged=ether1 vlan-ids=10
-add bridge=SWBR-1 comment=CAMS disabled=yes tagged=sfp-sfpplus1,sfp-sfpplus2 untagged=ether5,ether6 vlan-ids=20
-add bridge=SWBR-1 comment=OLD disabled=yes tagged=sfp-sfpplus1,sfp-sfpplus2 untagged=ether2 vlan-ids=40
-add bridge=SWBR-1 comment=OKBP disabled=yes tagged=sfp-sfpplus1,sfp-sfpplus2 untagged=ether3 vlan-ids=804
-add bridge=SWBR-1 comment=OtkrDver disabled=yes tagged=sfp-sfpplus1,sfp-sfpplus2 untagged=ether4 vlan-ids=1011
-add bridge=SWBR-1 disabled=yes tagged=sfp-sfpplus1 untagged=ether10 vlan-ids=1019
-add bridge=SWBR-1 tagged=sfp-sfpplus2,sfp-sfpplus1 untagged=ether22,ether23,ether21 vlan-ids=300
+add bridge=SWBR-1 comment=MGMT tagged=SWBR-1,sfp-sfpplus1,sfp-sfpplus2,ether24 untagged=ether23 vlan-ids=2
+add bridge=SWBR-1 comment=Perco tagged=sfp-sfpplus1,sfp-sfpplus2,ether24 untagged=ether1 vlan-ids=10
+add bridge=SWBR-1 comment=CAMS tagged=sfp-sfpplus1,sfp-sfpplus2,ether24 untagged=ether5,ether6 vlan-ids=20
+add bridge=SWBR-1 comment=OLD tagged=sfp-sfpplus1,sfp-sfpplus2,ether24 untagged=ether2 vlan-ids=40
+add bridge=SWBR-1 comment=OKBP tagged=sfp-sfpplus1,sfp-sfpplus2,ether24 untagged=ether3 vlan-ids=804
+add bridge=SWBR-1 comment=OtkrDver tagged=sfp-sfpplus1,sfp-sfpplus2,ether24 untagged=ether4 vlan-ids=1011
 /ip dhcp-client
 add disabled=no interface=v2-MGMT
 /ip service
 set telnet disabled=yes
 set ftp disabled=yes
 set www disabled=yes
-set ssh address=10.10.3.42/32 port=12128
+set ssh port=12128
 set api disabled=yes
 set api-ssl disabled=yes
 /snmp
-set contact=helptech@smartics.ru enabled=yes engine-id=18FD7476DE53 location=B2 trap-generators=interfaces trap-interfaces=SWBR-1 trap-target=10.10.3.34 trap-version=3
+set contact=helptech@smartics.ru enabled=yes engine-id=18FD7476DE53 location=B2 trap-generators=interfaces trap-interfaces=ether23,ether24,sfp-sfpplus1,sfp-sfpplus2 trap-target=10.10.3.34 trap-version=3
 /system clock
 set time-zone-name=Europe/Moscow
 /system identity
