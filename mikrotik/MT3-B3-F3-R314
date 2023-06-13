@@ -1,0 +1,191 @@
+#              model: CRS326-24G-2S+
+#      serial-number: 94550B885D51
+#      firmware-type: dx3230L
+#   current-firmware: 6.46.5
+#   installed-version: 6.48.6
+# Flags: U - undoable, R - redoable, F - floating-undo 
+#   ACTION                                   BY               POLICY             
+# F ip service changed                       admin            write              
+# F ip service changed                       admin            write              
+# F ip service changed                       admin            write              
+# F user oXi_backup_usr added                admin            write              
+#                                                             policy             
+# U user oxidized changed                    admin            write              
+#                                                             policy             
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# U device changed                           admin            write              
+# U changed snmp settings                    admin            write              
+# U item changed                             admin            write              
+# 
+# software id = GPLI-FQ24
+#
+# model = CRS326-24G-2S+
+# serial number = 94550B885D51
+/interface bridge
+add name=SWBR-1 vlan-filtering=yes
+/interface ethernet
+set [ find default-name=ether1 ] loop-protect=on loop-protect-disable-time=1m name=eth1
+set [ find default-name=ether2 ] loop-protect=on loop-protect-disable-time=1m name=eth2
+set [ find default-name=ether3 ] loop-protect=on loop-protect-disable-time=1m name=eth3
+set [ find default-name=ether4 ] loop-protect=on loop-protect-disable-time=1m name=eth4
+set [ find default-name=ether5 ] loop-protect=on loop-protect-disable-time=1m name=eth5
+set [ find default-name=ether6 ] loop-protect=on loop-protect-disable-time=1m name=eth6
+set [ find default-name=ether7 ] loop-protect=on loop-protect-disable-time=1m name=eth7
+set [ find default-name=ether8 ] loop-protect=on loop-protect-disable-time=1m name=eth8
+set [ find default-name=ether9 ] loop-protect=on loop-protect-disable-time=1m name=eth9
+set [ find default-name=ether10 ] loop-protect=on loop-protect-disable-time=1m name=eth10
+set [ find default-name=ether11 ] loop-protect=on loop-protect-disable-time=1m name=eth11
+set [ find default-name=ether12 ] loop-protect=on loop-protect-disable-time=1m name=eth12
+set [ find default-name=ether13 ] loop-protect=on loop-protect-disable-time=1m name=eth13
+set [ find default-name=ether14 ] loop-protect=on loop-protect-disable-time=1m name=eth14
+set [ find default-name=ether15 ] loop-protect=on loop-protect-disable-time=1m name=eth15
+set [ find default-name=ether16 ] loop-protect=on loop-protect-disable-time=1m name=eth16
+set [ find default-name=ether17 ] comment="MT1-B1-F3 SwOS Port#1" loop-protect=on loop-protect-disable-time=6s name=eth17
+set [ find default-name=ether18 ] loop-protect=on loop-protect-disable-time=1m name=eth18
+set [ find default-name=ether19 ] loop-protect=on loop-protect-disable-time=1m name=eth19
+set [ find default-name=ether20 ] loop-protect=on loop-protect-disable-time=1m name=eth20
+set [ find default-name=ether21 ] loop-protect=on loop-protect-disable-time=1m name=eth21
+set [ find default-name=ether22 ] loop-protect=on loop-protect-disable-time=1m name=eth22
+set [ find default-name=ether23 ] loop-protect=on loop-protect-disable-time=1m name=eth23
+set [ find default-name=ether24 ] loop-protect=off name=eth24
+set [ find default-name=sfp-sfpplus1 ] loop-protect=off name=sfpp1
+set [ find default-name=sfp-sfpplus2 ] comment=F_CRS loop-protect=on name=sfpp2
+/interface vlan
+add interface=SWBR-1 name=v2_MGMT vlan-id=2
+/interface wireless security-profiles
+set [ find default=yes ] supplicant-identity=MikroTik
+/snmp community
+set [ find default=yes ] addresses=10.10.3.34/32 authentication-password=Vn_FLD7_Bnz encryption-password=P1kfvaL23X name=smartics_pub security=private
+/user group
+set full policy="local,telnet,ssh,ftp,reboot,read,write,policy,test,winbox,password,web,sniff,sensitive,api,romon,dude,tikapp"
+/interface bridge port
+add bridge=SWBR-1 interface=eth2 pvid=6
+add bridge=SWBR-1 frame-types=admit-only-vlan-tagged interface=sfpp1
+add bridge=SWBR-1 interface=eth4 pvid=6
+add bridge=SWBR-1 interface=eth5 pvid=2
+add bridge=SWBR-1 interface=eth6 pvid=2
+add bridge=SWBR-1 interface=eth7 pvid=1010
+add bridge=SWBR-1 interface=eth8 pvid=1019
+add bridge=SWBR-1 interface=eth9 pvid=2
+add bridge=SWBR-1 interface=eth10 pvid=836
+add bridge=SWBR-1 interface=eth11 pvid=2034
+add bridge=SWBR-1 interface=eth3 pvid=2
+add bridge=SWBR-1 interface=eth13 pvid=1003
+add bridge=SWBR-1 interface=eth14 pvid=6
+add bridge=SWBR-1 interface=eth15 pvid=20
+add bridge=SWBR-1 interface=eth16 pvid=1022
+add bridge=SWBR-1 interface=eth17
+add bridge=SWBR-1 interface=eth18 pvid=20
+add bridge=SWBR-1 interface=eth19 pvid=20
+add bridge=SWBR-1 interface=eth22 pvid=2
+add bridge=SWBR-1 interface=eth21 pvid=2
+add bridge=SWBR-1 interface=eth23
+add bridge=SWBR-1 interface=eth12 pvid=2
+add bridge=SWBR-1 frame-types=admit-only-vlan-tagged interface=sfpp2
+add bridge=SWBR-1 interface=eth20 pvid=40
+add bridge=SWBR-1 interface=eth1 pvid=2
+add bridge=SWBR-1 interface=eth24
+/ip neighbor discovery-settings
+set discover-interface-list=!dynamic
+/interface bridge vlan
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth10,eth23,SWBR-1,eth17 untagged=eth1,eth3,eth5,eth6,eth9,eth11,eth12,eth22,eth21 vlan-ids=2
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth23 untagged=eth14,eth2,eth4,eth10 vlan-ids=6
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth1 vlan-ids=10
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth17,eth1 untagged=eth15,eth19,eth18 vlan-ids=20
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth1,eth6,eth9,eth12,eth17,eth22 untagged=eth20 vlan-ids=40
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth8,eth9,eth12 vlan-ids=200
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth9,eth12,eth1 untagged=eth18 vlan-ids=400
+add bridge=SWBR-1 disabled=yes tagged=sfpp1,sfpp2 vlan-ids=500
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth5,eth22 vlan-ids=700
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth3,eth23 vlan-ids=804
+add bridge=SWBR-1 tagged=sfpp1,sfpp2 vlan-ids=807
+add bridge=SWBR-1 tagged=sfpp1,sfpp2 vlan-ids=808
+add bridge=SWBR-1 tagged=sfpp1,sfpp2 vlan-ids=818
+add bridge=SWBR-1 tagged=sfpp1,sfpp2 vlan-ids=821
+add bridge=SWBR-1 tagged=sfpp1,sfpp2 vlan-ids=825
+add bridge=SWBR-1 tagged=sfpp1,sfpp2 vlan-ids=827
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth23 vlan-ids=829
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth23 vlan-ids=830
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth23 untagged=eth10 vlan-ids=836
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth17,eth23 vlan-ids=837
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth17 vlan-ids=838
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth23 vlan-ids=839
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth17,eth8,eth23 vlan-ids=899
+add bridge=SWBR-1 disabled=yes tagged=sfpp1,sfpp2,eth8 vlan-ids=1002
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth8,eth1 untagged=eth13 vlan-ids=1003
+add bridge=SWBR-1 tagged=sfpp1,sfpp2 vlan-ids=1030
+add bridge=SWBR-1 disabled=yes tagged=sfpp1,sfpp2,eth8 vlan-ids=110
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth8 vlan-ids=1004
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth8 vlan-ids=1005
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth8,eth17 vlan-ids=1006
+add bridge=SWBR-1 disabled=yes tagged=sfpp1,sfpp2,eth8 vlan-ids=1007
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1008
+add bridge=SWBR-1 disabled=yes tagged=eth8,sfpp1,sfpp2 vlan-ids=1009
+add bridge=SWBR-1 tagged=eth7,eth8,sfpp1,sfpp2 vlan-ids=1010
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1011
+add bridge=SWBR-1 disabled=yes tagged=eth8,eth10,sfpp1,sfpp2 vlan-ids=1012
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1013
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1014
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1015
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1016
+add bridge=SWBR-1 tagged=eth8,eth23,sfpp1,sfpp2 vlan-ids=1017
+add bridge=SWBR-1 disabled=yes tagged=eth8,sfpp1,sfpp2 vlan-ids=1018
+add bridge=SWBR-1 tagged=sfpp1,sfpp2 untagged=eth8 vlan-ids=1019
+add bridge=SWBR-1 disabled=yes tagged=eth8,sfpp1,sfpp2 vlan-ids=1020
+add bridge=SWBR-1 disabled=yes tagged=eth8,eth17,sfpp1,sfpp2 vlan-ids=1021
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 untagged=eth16 vlan-ids=1022
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1023
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1024
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1025
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1026
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1027
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1028
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1029
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1031
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1032
+add bridge=SWBR-1 tagged=eth8,sfpp1,sfpp2 vlan-ids=1097
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth23 vlan-ids=2014
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth23 vlan-ids=2015
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth23,eth4,eth2 vlan-ids=2016
+add bridge=SWBR-1 tagged=sfpp1,sfpp2 vlan-ids=2023
+add bridge=SWBR-1 tagged=eth8,eth17,sfpp1,sfpp2 vlan-ids=1033
+add bridge=SWBR-1 tagged=eth8,eth17,sfpp1,sfpp2,eth23 vlan-ids=1034
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth8,eth17 vlan-ids=1035
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth8,eth17 vlan-ids=1036
+add bridge=SWBR-1 tagged=sfpp1,sfpp2 vlan-ids=826
+add bridge=SWBR-1 tagged=eth8,eth17,sfpp1,sfpp2,eth23 untagged=eth11 vlan-ids=2034
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth8,eth17 vlan-ids=1037
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth13 vlan-ids=2003
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth23 vlan-ids=833
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth8 vlan-ids=1039
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth8 vlan-ids=1040
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth8,eth17 vlan-ids=1041
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth8,eth17 vlan-ids=1042
+add bridge=SWBR-1 tagged=sfpp1,sfpp2 vlan-ids=3015
+add bridge=SWBR-1 tagged=sfpp1,sfpp2,eth23 vlan-ids=2038
+add bridge=SWBR-1 tagged=eth17,sfpp2 vlan-ids=1047
+add bridge=SWBR-1 tagged=eth23,sfpp2 vlan-ids=1048
+add bridge=SWBR-1 tagged=eth2,sfpp2 vlan-ids=15
+/ip dhcp-client
+add disabled=no interface=v2_MGMT
+/ip service
+set telnet disabled=yes
+set ftp disabled=yes
+set www disabled=yes
+set ssh address=10.10.3.42/32 port=12128
+set api disabled=yes
+set api-ssl disabled=yes
+/snmp
+set contact=helptech@smartics.ru enabled=yes engine-id=C4AD341D5F57 location=B3 trap-generators=interfaces trap-interfaces=SWBR-1 trap-target=10.10.3.34 trap-version=3
+/system clock
+set time-zone-name=Europe/Moscow
+/system identity
+set name=MT3-B3-F3-R314
+/system ntp client
+set enabled=yes primary-ntp=192.36.143.130 secondary-ntp=88.147.254.230
+/system package update
+set channel=long-term
+/system routerboard settings
+set boot-os=router-os
