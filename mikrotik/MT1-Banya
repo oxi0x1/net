@@ -1,0 +1,58 @@
+#              model: RouterBOARD 952Ui-5ac2nD
+#      serial-number: 8B0808057F96
+#      firmware-type: qca9531L
+#   current-firmware: 3.41
+#   installed-version: 6.40.8
+# Flags: U - undoable, R - redoable, F - floating-undo 
+#   ACTION                                   BY               POLICY             
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U user oXi_backup_usr added                admin            write              
+#                                                             policy             
+# U item added                                                write              
+# 
+# software id = EHXC-ETHZ
+#
+# model = RouterBOARD 952Ui-5ac2nD
+# serial number = 8B0808057F96
+/interface bridge
+add name=br_Managment
+add name=br_Pub_Wifi
+/interface wireless
+set [ find default-name=wlan1 ] band=2ghz-b/g/n channel-width=20/40mhz-Ce disabled=no frequency=auto mode=ap-bridge name="WiFi 2.4" ssid="MG 2.4" wireless-protocol=802.11
+set [ find default-name=wlan2 ] band=5ghz-a/n/ac channel-width=20/40/80mhz-Ceee disabled=no frequency=auto mode=ap-bridge name="WiFi 5" ssid=MG5 wireless-protocol=802.11
+/interface vlan
+add interface=ether1 name=v2_Mgmt vlan-id=2
+add interface=ether1 name=v899_eth1 vlan-id=899
+/interface wireless security-profiles
+set [ find default=yes ] authentication-types=wpa2-psk eap-methods="" mode=dynamic-keys supplicant-identity=MikroTik wpa2-pre-shared-key=MagnetonGuest!
+/ip hotspot profile
+set [ find default=yes ] html-directory=flash/hotspot
+/snmp community
+set [ find default=yes ] addresses=10.10.3.34/32 authentication-password=Vn_FLD7_Bnz encryption-password=P1kfvaL23X name=smartics_pub security=private
+/interface bridge port
+add bridge=br_Managment interface=v2_Mgmt
+add bridge=br_Pub_Wifi interface="WiFi 2.4"
+add bridge=br_Pub_Wifi interface="WiFi 5"
+add bridge=br_Pub_Wifi interface=v899_eth1
+/ip dhcp-client
+add dhcp-options=hostname,clientid disabled=no interface=br_Managment
+/ip service
+set telnet disabled=yes
+set ftp disabled=yes
+set www disabled=yes
+set ssh address=10.10.3.42/32 port=12128
+set api disabled=yes
+set api-ssl disabled=yes
+/snmp
+set contact=helptech@smartics.ru enabled=yes engine-id=CC2DE0A64391 location=Banya trap-generators=interfaces trap-interfaces=br_Managment trap-target=10.10.3.34 trap-version=3
+/system clock
+set time-zone-name=Europe/Moscow
+/system identity
+set name=MT1-Banya
+/system ntp client
+set enabled=yes primary-ntp=193.192.36.3 secondary-ntp=88.147.254.230
