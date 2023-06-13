@@ -1,0 +1,94 @@
+#              model: RouterBOARD 962UiGS-5HacT2HnT
+#      serial-number: 8A77085641DE
+#      firmware-type: qca9550L
+#   current-firmware: 6.45.6
+#   installed-version: 6.47.4
+# Flags: U - undoable, R - redoable, F - floating-undo 
+#   ACTION                                   BY               POLICY             
+# U user oXi_backup_usr added                admin            write              
+#                                                             policy             
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# U ip service changed                       admin            write              
+# 
+# software id = VJVG-VWZJ
+#
+# model = RouterBOARD 962UiGS-5HacT2HnT
+# serial number = 8A77085641DE
+/interface bridge
+add admin-mac=CC:2D:E0:79:BC:6C auto-mac=no comment=defconf name=bridge
+/interface ethernet
+set [ find default-name=sfp1 ] auto-negotiation=no
+/interface wireless
+set [ find default-name=wlan1 ] band=2ghz-b/g/n channel-width=20/40mhz-Ce country=russia4 disabled=no frequency=auto frequency-mode=superchannel mode=ap-bridge ssid=Worknetrst24 wps-mode=disabled
+set [ find default-name=wlan2 ] band=5ghz-a/n/ac channel-width=20/40/80mhz-XXXX distance=indoors frequency=auto installation=indoor mode=ap-bridge ssid=MikroTik-79BC71 wireless-protocol=802.11
+/interface list
+add comment=defconf name=WAN
+add comment=defconf name=LAN
+/interface wireless security-profiles
+set [ find default=yes ] authentication-types=wpa2-psk eap-methods="" mode=dynamic-keys supplicant-identity=MikroTik wpa2-pre-shared-key=12345678
+/ip hotspot profile
+set [ find default=yes ] html-directory=flash/hotspot
+/ip pool
+add name=default-dhcp ranges=192.168.88.10-192.168.88.254
+/ip dhcp-server
+add address-pool=default-dhcp disabled=no interface=bridge name=defconf
+/snmp community
+set [ find default=yes ] addresses=10.10.3.34/32,10.10.4.0/24,10.10.6.0/24 authentication-password=Vn_FLD7_Bnz encryption-password=P1kfvaL23X name=smartics_pub security=private
+/interface bridge port
+add bridge=bridge comment=defconf interface=ether2
+add bridge=bridge comment=defconf interface=ether3
+add bridge=bridge comment=defconf interface=ether4
+add bridge=bridge comment=defconf interface=ether5
+add bridge=bridge comment=defconf interface=wlan1
+add bridge=bridge comment=defconf interface=wlan2
+/ip neighbor discovery-settings
+set discover-interface-list=LAN
+/interface list member
+add comment=defconf interface=bridge list=LAN
+add comment=defconf interface=ether1 list=WAN
+/ip address
+add address=192.168.88.1/24 comment=defconf interface=bridge network=192.168.88.0
+/ip dhcp-client
+add comment=defconf disabled=no interface=sfp1
+/ip dhcp-server network
+add address=192.168.88.0/24 comment=defconf gateway=192.168.88.1
+/ip dns
+set allow-remote-requests=yes
+/ip dns static
+add address=192.168.88.1 comment=defconf name=router.lan
+/ip firewall filter
+add action=accept chain=input comment="defconf: accept established,related,untracked" connection-state=established,related,untracked
+add action=drop chain=input comment="defconf: drop invalid" connection-state=invalid
+add action=accept chain=input comment="defconf: accept ICMP" protocol=icmp
+add action=accept chain=input comment="defconf: accept to local loopback (for CAPsMAN)" dst-address=127.0.0.1
+add action=drop chain=input comment="defconf: drop all not coming from LAN" disabled=yes in-interface-list=!LAN
+add action=accept chain=forward comment="defconf: accept in ipsec policy" ipsec-policy=in,ipsec
+add action=accept chain=forward comment="defconf: accept out ipsec policy" ipsec-policy=out,ipsec
+add action=fasttrack-connection chain=forward comment="defconf: fasttrack" connection-state=established,related
+add action=accept chain=forward comment="defconf: accept established,related, untracked" connection-state=established,related,untracked
+add action=drop chain=forward comment="defconf: drop invalid" connection-state=invalid
+add action=drop chain=forward comment="defconf: drop all from WAN not DSTNATed" connection-nat-state=!dstnat connection-state=new disabled=yes in-interface-list=WAN
+/ip firewall nat
+add action=masquerade chain=srcnat comment="defconf: masquerade" ipsec-policy=out,none out-interface=sfp1
+/ip service
+set telnet disabled=yes
+set ftp disabled=yes
+set www disabled=yes
+set ssh address=10.10.3.42/32 port=12128
+set api disabled=yes
+set api-ssl disabled=yes
+/snmp
+set contact=helptech@smartics.ru enabled=yes engine-id=CC2DE079BC6C location=SHAVERMA trap-generators=interfaces trap-interfaces=sfp1 trap-target=10.10.3.34 trap-version=3
+/system clock
+set time-zone-name=Europe/Moscow
+/system identity
+set name=SHAVERMA
+/tool mac-server
+set allowed-interface-list=LAN
+/tool mac-server mac-winbox
+set allowed-interface-list=LAN
