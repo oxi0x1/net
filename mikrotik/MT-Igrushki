@@ -5,10 +5,8 @@
 #   installed-version: 6.49.7
 # Flags: U - undoable, R - redoable, F - floating-undo 
 #   ACTION                                   BY               POLICY             
-# U mangle rule changed                      eduard           write              
-# U mangle rule changed                      eduard           write              
-# U address changed                          eduard           write              
-# U nat rule changed                         eduard           write              
+# U nat rule moved                           eduard           write              
+# U nat rule moved                           eduard           write              
 # 
 # software id = QSK2-CPZ1
 #
